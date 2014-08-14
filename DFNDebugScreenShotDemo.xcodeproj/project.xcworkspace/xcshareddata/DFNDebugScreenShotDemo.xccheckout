@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8639132E-D4CC-4697-8F72-8E439EA8B3B2</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DFNDebugScreenShotDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8A92872C-77BD-495B-B4C4-5D29FFD5D45D</key>
+		<string>ssh://github.com/dealforest/DFNDebugScreenShot.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>DFNDebugScreenShotDemo/DFNDebugScreenShotDemo.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8A92872C-77BD-495B-B4C4-5D29FFD5D45D</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/dealforest/DFNDebugScreenShot.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8A92872C-77BD-495B-B4C4-5D29FFD5D45D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8A92872C-77BD-495B-B4C4-5D29FFD5D45D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DFNDebugScreenShot</string>
+		</dict>
+	</array>
+</dict>
+</plist>
