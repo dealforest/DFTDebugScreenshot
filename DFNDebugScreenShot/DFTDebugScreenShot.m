@@ -13,7 +13,6 @@
 
 @interface DFTDebugScreenShot()
 
-@property (nonatomic, assign) BOOL autoCapture;
 @property (nonatomic, strong) NSMutableDictionary *drawAttributes;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, copy) void (^completionBlock)(NSString *, UIImage *);
@@ -23,13 +22,6 @@
 @end
 
 @implementation DFTDebugScreenShot
-
-+ (void)initialize {
-    [[NSNotificationCenter defaultCenter] addObserver:[DFTDebugScreenShot sharedInstance]
-                                             selector:@selector(handleScreenShot:)
-                                                 name:UIApplicationUserDidTakeScreenshotNotification
-                                               object:nil];
-}
 
 + (instancetype)sharedInstance {
     static DFTDebugScreenShot *instance;
@@ -43,8 +35,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.autoCapture = YES;
-
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
         paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
         paragraphStyle.alignment = NSTextAlignmentLeft;
@@ -58,24 +48,24 @@
         [formatter setTimeZone:[NSTimeZone systemTimeZone]];
         [formatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
         self.dateFormatter = formatter;
-
-        __weak typeof(self) wself = self;
-        self.completionBlock = ^(NSString * text, UIImage *image) {
-            [wself saveImageToPhotosAlbum:image];
-        };
     }
     return self;
 }
 
 #pragma mark -
-#pragma mark accessor
+#pragma mark class method
 
-+ (BOOL)getAutoCapture {
-    return [DFTDebugScreenShot sharedInstance].autoCapture;
++ (void)enableAutoCapture {
+    [[NSNotificationCenter defaultCenter] addObserver:[DFTDebugScreenShot sharedInstance]
+                                             selector:@selector(handlingScreenShot:)
+                                                 name:UIApplicationUserDidTakeScreenshotNotification
+                                               object:nil];
 }
 
-+ (void)setAutoCapture:(BOOL)value {
-    [DFTDebugScreenShot sharedInstance].autoCapture = value;
++ (void)disableAutoCapture {
+    [[NSNotificationCenter defaultCenter] removeObserver:[DFTDebugScreenShot sharedInstance]
+                                                    name:UIApplicationUserDidTakeScreenshotNotification
+                                                  object:nil];
 }
 
 + (NSDateFormatter *)getDateFormatter {
@@ -92,11 +82,11 @@
     }
 }
 
-+ (void)completionHandler:(void (^)(NSString *, UIImage *))block {
++ (void)completionBlock:(void (^)(NSString *, UIImage *))block {
+    if (block) {
+        [DFTDebugScreenShot sharedInstance].completionBlock = block;
+    }
 }
-
-#pragma mark -
-#pragma mark capture
 
 + (void)capture {
     DFTDebugScreenShot *instance = [DFTDebugScreenShot sharedInstance];
@@ -105,14 +95,19 @@
         id outputData = [controller performSelector:@selector(outputDataOfScreenShoot)];
         NSString *text = [outputData debugDescription];
         UIImage *image = [instance imageFromDebugText:text];
-        instance.completionBlock(text, image);
+        [instance saveImageToPhotosAlbum:image];
+        if (instance.completionBlock) {
+            instance.completionBlock(text, image);
+        }
     }
 }
 
-- (void)handleScreenShot:(NSNotification *)notification {
-    if (self.autoCapture) {
-        [DFTDebugScreenShot capture];
-    }
+
+#pragma mark -
+#pragma mark observer
+
+- (void)handlingScreenShot:(NSNotification *)notification {
+    [DFTDebugScreenShot capture];
 }
 
 #pragma mark -
