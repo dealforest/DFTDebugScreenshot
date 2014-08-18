@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DFTViewController : UIViewController
+@interface DFTViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
