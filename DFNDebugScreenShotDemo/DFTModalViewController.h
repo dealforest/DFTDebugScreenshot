@@ -1,5 +1,5 @@
 //
-//  DFTViewController.h
+//  DFTModalViewController.h
 //  DFTDebugScreenShotDemo
 //
 //  Created by Toshihiro Morimoto on 8/19/14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DFTViewController : UIViewController
-
-@property (nonatomic, strong) NSDictionary *data;
+@interface DFTModalViewController : UIViewController
 
 @end

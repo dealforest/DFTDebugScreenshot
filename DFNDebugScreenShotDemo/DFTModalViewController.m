@@ -1,18 +1,18 @@
 //
-//  DFTViewController.m
+//  DFTModalViewController.m
 //  DFTDebugScreenShotDemo
 //
 //  Created by Toshihiro Morimoto on 8/19/14.
 //  Copyright (c) 2014 Toshihiro Morimoto. All rights reserved.
 //
 
-#import "DFTViewController.h"
+#import "DFTModalViewController.h"
 
-@interface DFTViewController ()
+@interface DFTModalViewController ()
 
 @end
 
-@implementation DFTViewController
+@implementation DFTModalViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,7 +39,7 @@
 #pragma mark DFTDebugScreenShot
 
 - (id)outputDataOfScreenShoot {
-    return self.data;
+    return [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
 }
 
 /*
@@ -56,9 +56,12 @@
 #pragma mark -
 #pragma mark IBAction
 
+- (IBAction)touchedCloseButton:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (IBAction)touchedCaptureButton:(id)sender {
     [DFTDebugScreenShot capture];
 }
-
 
 @end
