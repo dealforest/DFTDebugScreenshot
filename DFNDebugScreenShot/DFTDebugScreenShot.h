@@ -10,4 +10,16 @@
 
 @interface DFTDebugScreenShot : NSObject
 
++ (BOOL)getAutoCapture;
++ (void)setAutoCapture:(BOOL)value;
+
++ (NSDateFormatter *)getDateFormatter;
++ (void)setDateFomatter:(NSDateFormatter *)formatter;
+
++ (void)configureDrawAttributes:(void (^)(NSMutableDictionary *))block;
+
++ (void)completionHandler:(void (^)(NSString *, UIImage *))block;
+
++ (void)capture;
+
 @end
