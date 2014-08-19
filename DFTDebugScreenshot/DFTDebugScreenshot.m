@@ -1,17 +1,17 @@
 //
-//  DFTDebugScreenShot.m
-//  DFNDebugScreenShotDemo
+//  DFTDebugScreenshot.m
+//  DFTDebugScreenshotDemo
 //
 //  Created by Toshihiro Morimoto on 8/14/14.
 //  Copyright (c) 2014 Toshihiro Morimoto. All rights reserved.
 //
 
-#import "DFTDebugScreenShot.h"
+#import "DFTDebugScreenshot.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #define DEFAULT_FONT_SIZE 12.f
 
-@interface DFTDebugScreenShot()
+@interface DFTDebugScreenshot()
 
 @property (nonatomic, strong) NSMutableDictionary *drawAttributes;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
@@ -21,13 +21,13 @@
 
 @end
 
-@implementation DFTDebugScreenShot
+@implementation DFTDebugScreenshot
 
 + (instancetype)sharedInstance {
-    static DFTDebugScreenShot *instance;
+    static DFTDebugScreenshot *instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [DFTDebugScreenShot new];
+        instance = [DFTDebugScreenshot new];
     });
     return instance;
 }
@@ -56,40 +56,40 @@
 #pragma mark class method
 
 + (void)enableAutoCapture {
-    [[NSNotificationCenter defaultCenter] addObserver:[DFTDebugScreenShot sharedInstance]
+    [[NSNotificationCenter defaultCenter] addObserver:[DFTDebugScreenshot sharedInstance]
                                              selector:@selector(handlingScreenShot:)
                                                  name:UIApplicationUserDidTakeScreenshotNotification
                                                object:nil];
 }
 
 + (void)disableAutoCapture {
-    [[NSNotificationCenter defaultCenter] removeObserver:[DFTDebugScreenShot sharedInstance]
+    [[NSNotificationCenter defaultCenter] removeObserver:[DFTDebugScreenshot sharedInstance]
                                                     name:UIApplicationUserDidTakeScreenshotNotification
                                                   object:nil];
 }
 
 + (NSDateFormatter *)getDateFormatter {
-    return [DFTDebugScreenShot sharedInstance].dateFormatter;
+    return [DFTDebugScreenshot sharedInstance].dateFormatter;
 }
 
 + (void)setDateFomatter:(NSDateFormatter *)formatter {
-    [DFTDebugScreenShot sharedInstance].dateFormatter = formatter;
+    [DFTDebugScreenshot sharedInstance].dateFormatter = formatter;
 }
 
 + (void)configureDrawAttributes:(void (^)(NSMutableDictionary *))block {
     if (block) {
-        block([DFTDebugScreenShot sharedInstance].drawAttributes);
+        block([DFTDebugScreenshot sharedInstance].drawAttributes);
     }
 }
 
 + (void)completionBlock:(void (^)(NSString *, UIImage *))block {
     if (block) {
-        [DFTDebugScreenShot sharedInstance].completionBlock = block;
+        [DFTDebugScreenshot sharedInstance].completionBlock = block;
     }
 }
 
 + (void)capture {
-    DFTDebugScreenShot *instance = [DFTDebugScreenShot sharedInstance];
+    DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
     UIViewController *controller = [instance visibledViewController];
     if ([controller respondsToSelector:@selector(outputDataOfScreenShoot)]) {
         id outputData = [controller performSelector:@selector(outputDataOfScreenShoot)];
@@ -107,7 +107,7 @@
 #pragma mark observer
 
 - (void)handlingScreenShot:(NSNotification *)notification {
-    [DFTDebugScreenShot capture];
+    [DFTDebugScreenshot capture];
 }
 
 #pragma mark -

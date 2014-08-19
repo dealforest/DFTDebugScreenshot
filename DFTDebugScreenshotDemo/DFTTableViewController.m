@@ -1,6 +1,6 @@
 //
 //  DFTViewController.m
-//  DFNDebugScreenShotDemo
+//  DFTDebugScreenShotDemo
 //
 //  Created by Toshihiro Morimoto on 8/14/14.
 //  Copyright (c) 2014 Toshihiro Morimoto. All rights reserved.
@@ -97,7 +97,7 @@
 #pragma mark IBAction
 
 - (IBAction)touchedCaptureButton:(id)sender {
-    [DFTDebugScreenShot capture];
+    [DFTDebugScreenshot capture];
 }
 
 @end

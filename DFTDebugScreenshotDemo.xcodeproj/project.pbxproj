@@ -8,22 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		33640F7190134D4A988D64B0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E0F2000FAB3407A824F2C34 /* libPods.a */; };
-		5E9BC66F19A2620500E2020C /* DFTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9BC66E19A2620500E2020C /* DFTViewController.m */; };
-		5E9BC67219A2621300E2020C /* DFTModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9BC67119A2621300E2020C /* DFTModalViewController.m */; };
 		5EB19C1C199CCC28008580F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB19C1B199CCC28008580F0 /* Foundation.framework */; };
 		5EB19C1E199CCC28008580F0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB19C1D199CCC28008580F0 /* CoreGraphics.framework */; };
 		5EB19C20199CCC28008580F0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB19C1F199CCC28008580F0 /* UIKit.framework */; };
-		5EB19C26199CCC28008580F0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EB19C24199CCC28008580F0 /* InfoPlist.strings */; };
-		5EB19C28199CCC28008580F0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB19C27199CCC28008580F0 /* main.m */; };
-		5EB19C2C199CCC28008580F0 /* DFTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB19C2B199CCC28008580F0 /* DFTAppDelegate.m */; };
-		5EB19C2F199CCC28008580F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EB19C2D199CCC28008580F0 /* Main.storyboard */; };
-		5EB19C32199CCC28008580F0 /* DFTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB19C31199CCC28008580F0 /* DFTTableViewController.m */; };
-		5EB19C34199CCC28008580F0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EB19C33199CCC28008580F0 /* Images.xcassets */; };
 		5EB19C3B199CCC28008580F0 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB19C3A199CCC28008580F0 /* XCTest.framework */; };
 		5EB19C3C199CCC28008580F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB19C1B199CCC28008580F0 /* Foundation.framework */; };
 		5EB19C3D199CCC28008580F0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB19C1F199CCC28008580F0 /* UIKit.framework */; };
-		5EB19C45199CCC28008580F0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EB19C43199CCC28008580F0 /* InfoPlist.strings */; };
-		5EB19C47199CCC28008580F0 /* DFNDebugScreenShotDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB19C46199CCC28008580F0 /* DFNDebugScreenShotDemoTests.m */; };
+		5EC7EB0319A33C250018C3D9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EC7EAFF19A33C250018C3D9 /* InfoPlist.strings */; };
+		5EC7EB1519A33C510018C3D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EC7EB0519A33C510018C3D9 /* Main.storyboard */; };
+		5EC7EB1619A33C510018C3D9 /* DFTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7EB0819A33C510018C3D9 /* DFTAppDelegate.m */; };
+		5EC7EB1719A33C510018C3D9 /* DFTDebugScreenShotDemo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EC7EB0919A33C510018C3D9 /* DFTDebugScreenShotDemo-Info.plist */; };
+		5EC7EB1819A33C510018C3D9 /* DFTModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7EB0C19A33C510018C3D9 /* DFTModalViewController.m */; };
+		5EC7EB1919A33C510018C3D9 /* DFTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7EB0E19A33C510018C3D9 /* DFTTableViewController.m */; };
+		5EC7EB1A19A33C510018C3D9 /* DFTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7EB1019A33C510018C3D9 /* DFTViewController.m */; };
+		5EC7EB1B19A33C510018C3D9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EC7EB1119A33C510018C3D9 /* InfoPlist.strings */; };
+		5EC7EB1C19A33C510018C3D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EC7EB1319A33C510018C3D9 /* Images.xcassets */; };
+		5EC7EB1D19A33C510018C3D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7EB1419A33C510018C3D9 /* main.m */; };
+		5EC7EB6219A33E480018C3D9 /* DFTDebugScreenshotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7EB6119A33E480018C3D9 /* DFTDebugScreenshotTests.m */; };
+		5EC7EB6419A33E4E0018C3D9 /* DFTDebugScreenshotTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EC7EB6319A33E4E0018C3D9 /* DFTDebugScreenshotTests-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,29 +40,29 @@
 
 /* Begin PBXFileReference section */
 		1E0F2000FAB3407A824F2C34 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E9BC66D19A2620500E2020C /* DFTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFTViewController.h; sourceTree = "<group>"; };
-		5E9BC66E19A2620500E2020C /* DFTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFTViewController.m; sourceTree = "<group>"; };
-		5E9BC67019A2621300E2020C /* DFTModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFTModalViewController.h; sourceTree = "<group>"; };
-		5E9BC67119A2621300E2020C /* DFTModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFTModalViewController.m; sourceTree = "<group>"; };
 		5EB19C18199CCC28008580F0 /* DFTDebugScreenShotDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DFTDebugScreenShotDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EB19C1B199CCC28008580F0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5EB19C1D199CCC28008580F0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5EB19C1F199CCC28008580F0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		5EB19C23199CCC28008580F0 /* DFTDebugScreenShotDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DFTDebugScreenShotDemo-Info.plist"; sourceTree = "<group>"; };
-		5EB19C25199CCC28008580F0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5EB19C27199CCC28008580F0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5EB19C29199CCC28008580F0 /* DFTDebugScreenShotDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DFTDebugScreenShotDemo-Prefix.pch"; sourceTree = "<group>"; };
-		5EB19C2A199CCC28008580F0 /* DFTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFTAppDelegate.h; sourceTree = "<group>"; };
-		5EB19C2B199CCC28008580F0 /* DFTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFTAppDelegate.m; sourceTree = "<group>"; };
-		5EB19C2E199CCC28008580F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5EB19C30199CCC28008580F0 /* DFTTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFTTableViewController.h; sourceTree = "<group>"; };
-		5EB19C31199CCC28008580F0 /* DFTTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFTTableViewController.m; sourceTree = "<group>"; };
-		5EB19C33199CCC28008580F0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5EB19C39199CCC28008580F0 /* DFTDebugScreenShotDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DFTDebugScreenShotDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EB19C3A199CCC28008580F0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		5EB19C42199CCC28008580F0 /* DFNDebugScreenShotDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DFNDebugScreenShotDemoTests-Info.plist"; sourceTree = "<group>"; };
-		5EB19C44199CCC28008580F0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5EB19C46199CCC28008580F0 /* DFNDebugScreenShotDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFNDebugScreenShotDemoTests.m; sourceTree = "<group>"; };
+		5EC7EB0019A33C250018C3D9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5EC7EB0619A33C510018C3D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5EC7EB0719A33C510018C3D9 /* DFTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFTAppDelegate.h; sourceTree = "<group>"; };
+		5EC7EB0819A33C510018C3D9 /* DFTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFTAppDelegate.m; sourceTree = "<group>"; };
+		5EC7EB0919A33C510018C3D9 /* DFTDebugScreenShotDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DFTDebugScreenShotDemo-Info.plist"; sourceTree = "<group>"; };
+		5EC7EB0A19A33C510018C3D9 /* DFTDebugScreenShotDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DFTDebugScreenShotDemo-Prefix.pch"; sourceTree = "<group>"; };
+		5EC7EB0B19A33C510018C3D9 /* DFTModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFTModalViewController.h; sourceTree = "<group>"; };
+		5EC7EB0C19A33C510018C3D9 /* DFTModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFTModalViewController.m; sourceTree = "<group>"; };
+		5EC7EB0D19A33C510018C3D9 /* DFTTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFTTableViewController.h; sourceTree = "<group>"; };
+		5EC7EB0E19A33C510018C3D9 /* DFTTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFTTableViewController.m; sourceTree = "<group>"; };
+		5EC7EB0F19A33C510018C3D9 /* DFTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFTViewController.h; sourceTree = "<group>"; };
+		5EC7EB1019A33C510018C3D9 /* DFTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFTViewController.m; sourceTree = "<group>"; };
+		5EC7EB1219A33C510018C3D9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5EC7EB1319A33C510018C3D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		5EC7EB1419A33C510018C3D9 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5EC7EB6119A33E480018C3D9 /* DFTDebugScreenshotTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFTDebugScreenshotTests.m; sourceTree = "<group>"; };
+		5EC7EB6319A33E4E0018C3D9 /* DFTDebugScreenshotTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DFTDebugScreenshotTests-Info.plist"; sourceTree = "<group>"; };
 		B580B3C51F264717A44A3E98 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,8 +94,8 @@
 		5EB19C0F199CCC28008580F0 = {
 			isa = PBXGroup;
 			children = (
-				5EB19C21199CCC28008580F0 /* DFTDebugScreenShotDemo */,
-				5EB19C40199CCC28008580F0 /* DFNDebugScreenShotDemoTests */,
+				5EC7EB0419A33C510018C3D9 /* DFTDebugScreenshotDemo */,
+				5EC7EAFC19A33C250018C3D9 /* DFTDebugScreenshotTests */,
 				5EB19C1A199CCC28008580F0 /* Frameworks */,
 				5EB19C19199CCC28008580F0 /* Products */,
 				B580B3C51F264717A44A3E98 /* Pods.xcconfig */,
@@ -121,50 +123,49 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5EB19C21199CCC28008580F0 /* DFTDebugScreenShotDemo */ = {
+		5EC7EAFC19A33C250018C3D9 /* DFTDebugScreenshotTests */ = {
 			isa = PBXGroup;
 			children = (
-				5EB19C2A199CCC28008580F0 /* DFTAppDelegate.h */,
-				5EB19C2B199CCC28008580F0 /* DFTAppDelegate.m */,
-				5EB19C2D199CCC28008580F0 /* Main.storyboard */,
-				5EB19C30199CCC28008580F0 /* DFTTableViewController.h */,
-				5EB19C31199CCC28008580F0 /* DFTTableViewController.m */,
-				5E9BC67019A2621300E2020C /* DFTModalViewController.h */,
-				5E9BC67119A2621300E2020C /* DFTModalViewController.m */,
-				5E9BC66D19A2620500E2020C /* DFTViewController.h */,
-				5E9BC66E19A2620500E2020C /* DFTViewController.m */,
-				5EB19C33199CCC28008580F0 /* Images.xcassets */,
-				5EB19C22199CCC28008580F0 /* Supporting Files */,
+				5EC7EB6119A33E480018C3D9 /* DFTDebugScreenshotTests.m */,
+				5EC7EB6019A33C740018C3D9 /* Supporting Files */,
 			);
-			name = DFTDebugScreenShotDemo;
-			path = DFNDebugScreenShotDemo;
+			path = DFTDebugScreenshotTests;
 			sourceTree = "<group>";
 		};
-		5EB19C22199CCC28008580F0 /* Supporting Files */ = {
+		5EC7EB0419A33C510018C3D9 /* DFTDebugScreenshotDemo */ = {
 			isa = PBXGroup;
 			children = (
-				5EB19C23199CCC28008580F0 /* DFTDebugScreenShotDemo-Info.plist */,
-				5EB19C24199CCC28008580F0 /* InfoPlist.strings */,
-				5EB19C27199CCC28008580F0 /* main.m */,
-				5EB19C29199CCC28008580F0 /* DFTDebugScreenShotDemo-Prefix.pch */,
+				5EC7EB0719A33C510018C3D9 /* DFTAppDelegate.h */,
+				5EC7EB0819A33C510018C3D9 /* DFTAppDelegate.m */,
+				5EC7EB0B19A33C510018C3D9 /* DFTModalViewController.h */,
+				5EC7EB0C19A33C510018C3D9 /* DFTModalViewController.m */,
+				5EC7EB0D19A33C510018C3D9 /* DFTTableViewController.h */,
+				5EC7EB0E19A33C510018C3D9 /* DFTTableViewController.m */,
+				5EC7EB0F19A33C510018C3D9 /* DFTViewController.h */,
+				5EC7EB1019A33C510018C3D9 /* DFTViewController.m */,
+				5EC7EB0519A33C510018C3D9 /* Main.storyboard */,
+				5EC7EB1319A33C510018C3D9 /* Images.xcassets */,
+				5EC7EB1E19A33C5C0018C3D9 /* Supporting Files */,
+			);
+			path = DFTDebugScreenshotDemo;
+			sourceTree = "<group>";
+		};
+		5EC7EB1E19A33C5C0018C3D9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5EC7EB0919A33C510018C3D9 /* DFTDebugScreenShotDemo-Info.plist */,
+				5EC7EB0A19A33C510018C3D9 /* DFTDebugScreenShotDemo-Prefix.pch */,
+				5EC7EB1419A33C510018C3D9 /* main.m */,
+				5EC7EB1119A33C510018C3D9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5EB19C40199CCC28008580F0 /* DFNDebugScreenShotDemoTests */ = {
+		5EC7EB6019A33C740018C3D9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5EB19C46199CCC28008580F0 /* DFNDebugScreenShotDemoTests.m */,
-				5EB19C41199CCC28008580F0 /* Supporting Files */,
-			);
-			path = DFNDebugScreenShotDemoTests;
-			sourceTree = "<group>";
-		};
-		5EB19C41199CCC28008580F0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5EB19C42199CCC28008580F0 /* DFNDebugScreenShotDemoTests-Info.plist */,
-				5EB19C43199CCC28008580F0 /* InfoPlist.strings */,
+				5EC7EB6319A33E4E0018C3D9 /* DFTDebugScreenshotTests-Info.plist */,
+				5EC7EAFF19A33C250018C3D9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -224,7 +225,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5EB19C13199CCC28008580F0 /* Build configuration list for PBXProject "DFTDebugScreenShotDemo" */;
+			buildConfigurationList = 5EB19C13199CCC28008580F0 /* Build configuration list for PBXProject "DFTDebugScreenshotDemo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -248,9 +249,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EB19C34199CCC28008580F0 /* Images.xcassets in Resources */,
-				5EB19C26199CCC28008580F0 /* InfoPlist.strings in Resources */,
-				5EB19C2F199CCC28008580F0 /* Main.storyboard in Resources */,
+				5EC7EB1719A33C510018C3D9 /* DFTDebugScreenShotDemo-Info.plist in Resources */,
+				5EC7EB1C19A33C510018C3D9 /* Images.xcassets in Resources */,
+				5EC7EB1B19A33C510018C3D9 /* InfoPlist.strings in Resources */,
+				5EC7EB1519A33C510018C3D9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +260,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EB19C45199CCC28008580F0 /* InfoPlist.strings in Resources */,
+				5EC7EB0319A33C250018C3D9 /* InfoPlist.strings in Resources */,
+				5EC7EB6419A33E4E0018C3D9 /* DFTDebugScreenshotTests-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,11 +305,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EB19C28199CCC28008580F0 /* main.m in Sources */,
-				5EB19C2C199CCC28008580F0 /* DFTAppDelegate.m in Sources */,
-				5E9BC66F19A2620500E2020C /* DFTViewController.m in Sources */,
-				5EB19C32199CCC28008580F0 /* DFTTableViewController.m in Sources */,
-				5E9BC67219A2621300E2020C /* DFTModalViewController.m in Sources */,
+				5EC7EB1D19A33C510018C3D9 /* main.m in Sources */,
+				5EC7EB1619A33C510018C3D9 /* DFTAppDelegate.m in Sources */,
+				5EC7EB1819A33C510018C3D9 /* DFTModalViewController.m in Sources */,
+				5EC7EB1919A33C510018C3D9 /* DFTTableViewController.m in Sources */,
+				5EC7EB1A19A33C510018C3D9 /* DFTViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,7 +317,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EB19C47199CCC28008580F0 /* DFNDebugScreenShotDemoTests.m in Sources */,
+				5EC7EB6219A33E480018C3D9 /* DFTDebugScreenshotTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,26 +332,26 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5EB19C24199CCC28008580F0 /* InfoPlist.strings */ = {
+		5EC7EAFF19A33C250018C3D9 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5EB19C25199CCC28008580F0 /* en */,
+				5EC7EB0019A33C250018C3D9 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		5EB19C2D199CCC28008580F0 /* Main.storyboard */ = {
+		5EC7EB0519A33C510018C3D9 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5EB19C2E199CCC28008580F0 /* Base */,
+				5EC7EB0619A33C510018C3D9 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		5EB19C43199CCC28008580F0 /* InfoPlist.strings */ = {
+		5EC7EB1119A33C510018C3D9 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5EB19C44199CCC28008580F0 /* en */,
+				5EC7EB1219A33C510018C3D9 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -433,8 +436,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "DFNDebugScreenShotDemo/DFTDebugScreenShotDemo-Prefix.pch";
-				INFOPLIST_FILE = "DFNDebugScreenShotDemo/DFTDebugScreenShotDemo-Info.plist";
+				GCC_PREFIX_HEADER = "DFTDebugScreenshotDemo/DFTDebugScreenshotDemo-Prefix.pch";
+				INFOPLIST_FILE = "DFTDebugScreenshotDemo/DFTDebugScreenshotDemo-Info.plist";
 				PRODUCT_NAME = DFTDebugScreenShotDemo;
 				WRAPPER_EXTENSION = app;
 			};
@@ -447,8 +450,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "DFNDebugScreenShotDemo/DFTDebugScreenShotDemo-Prefix.pch";
-				INFOPLIST_FILE = "DFNDebugScreenShotDemo/DFTDebugScreenShotDemo-Info.plist";
+				GCC_PREFIX_HEADER = "DFTDebugScreenshotDemo/DFTDebugScreenshotDemo-Prefix.pch";
+				INFOPLIST_FILE = "DFTDebugScreenshotDemo/DFTDebugScreenshotDemo-Info.plist";
 				PRODUCT_NAME = DFTDebugScreenShotDemo;
 				WRAPPER_EXTENSION = app;
 			};
@@ -456,20 +459,21 @@
 		};
 		5EB19C4E199CCC28008580F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B580B3C51F264717A44A3E98 /* Pods.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DFNDebugScreenShotDemo.app/DFNDebugScreenShotDemo";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DFTDebugScreenshotDemo.app/DFTDebugScreenshotDemo";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "DFNDebugScreenShotDemo/DFNDebugScreenShotDemo-Prefix.pch";
+				GCC_PREFIX_HEADER = "DFTDebugScreenshotDemo/DFTDebugScreenshotDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "DFNDebugScreenShotDemoTests/DFNDebugScreenShotDemoTests-Info.plist";
+				INFOPLIST_FILE = "DFTDebugScreenShotTests/DFTDebugScreenShotTests-Info.plist";
 				PRODUCT_NAME = DFTDebugScreenShotDemoTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -478,16 +482,17 @@
 		};
 		5EB19C4F199CCC28008580F0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B580B3C51F264717A44A3E98 /* Pods.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DFNDebugScreenShotDemo.app/DFNDebugScreenShotDemo";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DFTDebugScreenshotDemo.app/DFTDebugScreenshotDemo";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "DFNDebugScreenShotDemo/DFNDebugScreenShotDemo-Prefix.pch";
-				INFOPLIST_FILE = "DFNDebugScreenShotDemoTests/DFNDebugScreenShotDemoTests-Info.plist";
+				GCC_PREFIX_HEADER = "DFTDebugScreenshotDemo/DFTDebugScreenshotDemo-Prefix.pch";
+				INFOPLIST_FILE = "DFTDebugScreenShotTests/DFTDebugScreenShotTests-Info.plist";
 				PRODUCT_NAME = DFTDebugScreenShotDemoTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -497,7 +502,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5EB19C13199CCC28008580F0 /* Build configuration list for PBXProject "DFTDebugScreenShotDemo" */ = {
+		5EB19C13199CCC28008580F0 /* Build configuration list for PBXProject "DFTDebugScreenshotDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5EB19C48199CCC28008580F0 /* Debug */,

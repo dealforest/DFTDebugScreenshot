@@ -1,14 +1,14 @@
 PODS:
-  - DFNDebugScreenShot (0.0.1)
+  - DFTDebugScreenshot (0.0.1)
 
 DEPENDENCIES:
-  - DFNDebugScreenShot (from `./`)
+  - DFTDebugScreenshot (from `./`)
 
 EXTERNAL SOURCES:
-  DFNDebugScreenShot:
+  DFTDebugScreenshot:
     :path: ./
 
 SPEC CHECKSUMS:
-  DFNDebugScreenShot: 29708f472345f82e85b374a31a91cf740114b6e1
+  DFTDebugScreenshot: 65225de5144e679086bc1675be2815bcf9c6c8dd
 
 COCOAPODS: 0.33.1

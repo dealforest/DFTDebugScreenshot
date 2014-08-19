@@ -57,7 +57,7 @@
 #pragma mark IBAction
 
 - (IBAction)touchedCaptureButton:(id)sender {
-    [DFTDebugScreenShot capture];
+    [DFTDebugScreenshot capture];
 }
 
 

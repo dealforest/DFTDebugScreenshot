@@ -1,13 +1,13 @@
-# DFNDebugScreenshot
-[![Badge w/ Version](http://cocoapod-badges.herokuapp.com/v/DFNDebugScreenshot/badge.png)](http://cocoadocs.org/docsets/DFNDebugScreenshot)
-[![Badge w/ Platform](http://cocoapod-badges.herokuapp.com/p/DFNDebugScreenshot/badge.png)](http://cocoadocs.org/docsets/DFNDebugScreenshot)
+# DFTDebugScreenshot
+[![Badge w/ Version](http://cocoapod-badges.herokuapp.com/v/DFTDebugScreenshot/badge.png)](http://cocoadocs.org/docsets/DFTDebugScreenshot)
+[![Badge w/ Platform](http://cocoapod-badges.herokuapp.com/p/DFTDebugScreenshot/badge.png)](http://cocoadocs.org/docsets/DFTDebugScreenshot)
 
 
 Simple debug tool for screenshot.
 
 It will write out the debug image of the ViewController being displayed.
 
-![demo](https://github.com/dealforest/DFNDebugScreenShot/raw/master/images/demo.gif)
+![demo](https://github.com/dealforest/DFTDebugScreenShot/raw/master/images/demo.gif)
 
 ## Requirements
 * iOS 7.0 or later
@@ -15,8 +15,8 @@ It will write out the debug image of the ViewController being displayed.
 
 ## Usage
 
-1. add fields under DFNDebugScreenshot/* to your project.
-2. import DFNDebugScreenshot.h
+1. add fields under DFTDebugScreenshot/* to your project.
+2. import DFTDebugScreenshot.h
 3. write to the code(`- [UIViewController outputDataOfScreenshoot]`) for the debug information. 
 
 ```objective-c
@@ -35,7 +35,7 @@ When you take a screenshot, and automatically write out the debug image.
 ```objective-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   ...
-  [DFNDebugScreenshot enableAutoCapture]
+  [DFTDebugScreenshot enableAutoCapture]
   ...
 }
 ```
@@ -51,14 +51,14 @@ It will write out the debug image at the timing at which you intended.
 
 ## Installing
 
-The best way to Install DFNDebugScreenShot is by using CocoaPods.
+The best way to Install DFTDebugScreenShot is by using CocoaPods.
 ```
-pod 'DFNDebugScreenshot'
+pod 'DFTDebugScreenshot'
 ```
 
 ### Without CocoaPods 
 
-- add files under `DFNDebugScreenshot/*` to your project.
+- add files under `DFTDebugScreenshot/*` to your project.
 - add `AssetsLibrary.framework` to "Link Binary With Libraries" (in "Build Phases").
  
 ## Demo
@@ -70,7 +70,7 @@ $ open DFTDebugScreenshotDemo.xcworkspace
 
 ## Change log
 
-see [Releases](https://github.com/dealforest/DFNDebugScreenshot/releases)
+see [Releases](https://github.com/dealforest/DFTDebugScreenshot/releases)
 
 ## License
 

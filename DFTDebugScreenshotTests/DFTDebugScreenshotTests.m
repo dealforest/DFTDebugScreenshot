@@ -1,6 +1,6 @@
 //
-//  DFNDebugScreenShotTests.m
-//  DFNDebugScreenShotTests
+//  DFTDebugScreenshotTests.m
+//  DFTDebugScreenshotTests
 //
 //  Created by Toshihiro Morimoto on 8/14/14.
 //  Copyright (c) 2014 Toshihiro Morimoto. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface DFNDebugScreenShotTests : XCTestCase
+@interface DFTDebugScreenshotTests : XCTestCase
 
 @end
 
-@implementation DFNDebugScreenShotTests
+@implementation DFTDebugScreenshotTests
 
 - (void)setUp
 {
@@ -24,11 +24,6 @@
 {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
-}
-
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
 }
 
 @end
