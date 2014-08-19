@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E6CEFEB199CD8ED00F7E241 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E6CEFEA199CD8ED00F7E241 /* AssetsLibrary.framework */; };
+		33640F7190134D4A988D64B0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E0F2000FAB3407A824F2C34 /* libPods.a */; };
 		5E9BC66F19A2620500E2020C /* DFTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9BC66E19A2620500E2020C /* DFTViewController.m */; };
 		5E9BC67219A2621300E2020C /* DFTModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9BC67119A2621300E2020C /* DFTModalViewController.m */; };
 		5EB19C1C199CCC28008580F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB19C1B199CCC28008580F0 /* Foundation.framework */; };
@@ -24,7 +24,6 @@
 		5EB19C3D199CCC28008580F0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB19C1F199CCC28008580F0 /* UIKit.framework */; };
 		5EB19C45199CCC28008580F0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5EB19C43199CCC28008580F0 /* InfoPlist.strings */; };
 		5EB19C47199CCC28008580F0 /* DFNDebugScreenShotDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB19C46199CCC28008580F0 /* DFNDebugScreenShotDemoTests.m */; };
-		5EB19C53199CCDC0008580F0 /* DFTDebugScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EB19C52199CCDC0008580F0 /* DFTDebugScreenShot.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5E6CEFEA199CD8ED00F7E241 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		1E0F2000FAB3407A824F2C34 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E9BC66D19A2620500E2020C /* DFTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFTViewController.h; sourceTree = "<group>"; };
 		5E9BC66E19A2620500E2020C /* DFTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFTViewController.m; sourceTree = "<group>"; };
 		5E9BC67019A2621300E2020C /* DFTModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFTModalViewController.h; sourceTree = "<group>"; };
@@ -62,8 +61,7 @@
 		5EB19C42199CCC28008580F0 /* DFNDebugScreenShotDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DFNDebugScreenShotDemoTests-Info.plist"; sourceTree = "<group>"; };
 		5EB19C44199CCC28008580F0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5EB19C46199CCC28008580F0 /* DFNDebugScreenShotDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFNDebugScreenShotDemoTests.m; sourceTree = "<group>"; };
-		5EB19C51199CCDC0008580F0 /* DFTDebugScreenShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DFTDebugScreenShot.h; path = DFNDebugScreenShot/DFTDebugScreenShot.h; sourceTree = "<group>"; };
-		5EB19C52199CCDC0008580F0 /* DFTDebugScreenShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DFTDebugScreenShot.m; path = DFNDebugScreenShot/DFTDebugScreenShot.m; sourceTree = "<group>"; };
+		B580B3C51F264717A44A3E98 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,10 +69,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E6CEFEB199CD8ED00F7E241 /* AssetsLibrary.framework in Frameworks */,
 				5EB19C1E199CCC28008580F0 /* CoreGraphics.framework in Frameworks */,
 				5EB19C20199CCC28008580F0 /* UIKit.framework in Frameworks */,
 				5EB19C1C199CCC28008580F0 /* Foundation.framework in Frameworks */,
+				33640F7190134D4A988D64B0 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,11 +92,11 @@
 		5EB19C0F199CCC28008580F0 = {
 			isa = PBXGroup;
 			children = (
-				5EB19C50199CCD84008580F0 /* DFTDebugScreenShot */,
 				5EB19C21199CCC28008580F0 /* DFTDebugScreenShotDemo */,
 				5EB19C40199CCC28008580F0 /* DFNDebugScreenShotDemoTests */,
 				5EB19C1A199CCC28008580F0 /* Frameworks */,
 				5EB19C19199CCC28008580F0 /* Products */,
+				B580B3C51F264717A44A3E98 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,11 +112,11 @@
 		5EB19C1A199CCC28008580F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5E6CEFEA199CD8ED00F7E241 /* AssetsLibrary.framework */,
 				5EB19C1B199CCC28008580F0 /* Foundation.framework */,
 				5EB19C1D199CCC28008580F0 /* CoreGraphics.framework */,
 				5EB19C1F199CCC28008580F0 /* UIKit.framework */,
 				5EB19C3A199CCC28008580F0 /* XCTest.framework */,
+				1E0F2000FAB3407A824F2C34 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -171,15 +169,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5EB19C50199CCD84008580F0 /* DFTDebugScreenShot */ = {
-			isa = PBXGroup;
-			children = (
-				5EB19C51199CCDC0008580F0 /* DFTDebugScreenShot.h */,
-				5EB19C52199CCDC0008580F0 /* DFTDebugScreenShot.m */,
-			);
-			name = DFTDebugScreenShot;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -187,9 +176,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5EB19C4A199CCC28008580F0 /* Build configuration list for PBXNativeTarget "DFTDebugScreenShotDemo" */;
 			buildPhases = (
+				330A2DCF80B24D9A9934C831 /* Check Pods Manifest.lock */,
 				5EB19C14199CCC28008580F0 /* Sources */,
 				5EB19C15199CCC28008580F0 /* Frameworks */,
 				5EB19C16199CCC28008580F0 /* Resources */,
+				CAE9EC31DBF7436BB9EF9B67 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -273,6 +264,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		330A2DCF80B24D9A9934C831 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CAE9EC31DBF7436BB9EF9B67 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5EB19C14199CCC28008580F0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -280,7 +304,6 @@
 			files = (
 				5EB19C28199CCC28008580F0 /* main.m in Sources */,
 				5EB19C2C199CCC28008580F0 /* DFTAppDelegate.m in Sources */,
-				5EB19C53199CCDC0008580F0 /* DFTDebugScreenShot.m in Sources */,
 				5E9BC66F19A2620500E2020C /* DFTViewController.m in Sources */,
 				5EB19C32199CCC28008580F0 /* DFTTableViewController.m in Sources */,
 				5E9BC67219A2621300E2020C /* DFTModalViewController.m in Sources */,
@@ -405,6 +428,7 @@
 		};
 		5EB19C4B199CCC28008580F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B580B3C51F264717A44A3E98 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -418,6 +442,7 @@
 		};
 		5EB19C4C199CCC28008580F0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B580B3C51F264717A44A3E98 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

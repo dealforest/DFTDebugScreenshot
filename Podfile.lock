@@ -1,0 +1,14 @@
+PODS:
+  - DFNDebugScreenShot (0.0.1)
+
+DEPENDENCIES:
+  - DFNDebugScreenShot (from `./`)
+
+EXTERNAL SOURCES:
+  DFNDebugScreenShot:
+    :path: ./
+
+SPEC CHECKSUMS:
+  DFNDebugScreenShot: 29708f472345f82e85b374a31a91cf740114b6e1
+
+COCOAPODS: 0.33.1
