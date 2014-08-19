@@ -35,7 +35,7 @@ When you take a screenshot, and automatically write out the debug image.
 ```objective-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   ...
-  [DFTDebugScreenshot enableAutoCapture]
+  [DFTDebugScreenshot enableTracking];
   ...
 }
 ```
@@ -45,7 +45,7 @@ It will write out the debug image at the timing at which you intended.
 
 ```objective-c
 - (IBAction)touchedCaptureButton {
-  [DFNDebugScreenshot capture]
+  [DFNDebugScreenshot capture];
 }
 ```
 

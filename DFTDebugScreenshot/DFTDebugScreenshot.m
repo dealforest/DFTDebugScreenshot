@@ -13,6 +13,7 @@
 
 @interface DFTDebugScreenshot()
 
+@property (nonatomic, assign) BOOL tracking;
 @property (nonatomic, strong) NSMutableDictionary *drawAttributes;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, copy) void (^completionBlock)(NSString *, UIImage *);
@@ -55,17 +56,28 @@
 #pragma mark -
 #pragma mark class method
 
-+ (void)enableAutoCapture {
-    [[NSNotificationCenter defaultCenter] addObserver:[DFTDebugScreenshot sharedInstance]
-                                             selector:@selector(handlingScreenShot:)
-                                                 name:UIApplicationUserDidTakeScreenshotNotification
-                                               object:nil];
++ (BOOL)getTracking {
+    return [DFTDebugScreenshot sharedInstance].tracking;
 }
 
-+ (void)disableAutoCapture {
-    [[NSNotificationCenter defaultCenter] removeObserver:[DFTDebugScreenshot sharedInstance]
-                                                    name:UIApplicationUserDidTakeScreenshotNotification
-                                                  object:nil];
++ (void)setTraking:(BOOL)value {
+    DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
+    if (instance.tracking == value) {
+        return;
+    }
+    else if (value == YES) {
+        instance.tracking = value;
+        [[NSNotificationCenter defaultCenter] addObserver:[DFTDebugScreenshot sharedInstance]
+                                                 selector:@selector(handlingScreenShot:)
+                                                     name:UIApplicationUserDidTakeScreenshotNotification
+                                                   object:nil];
+    }
+    else {
+        instance.tracking = value;
+        [[NSNotificationCenter defaultCenter] removeObserver:[DFTDebugScreenshot sharedInstance]
+                                                        name:UIApplicationUserDidTakeScreenshotNotification
+                                                      object:nil];
+    }
 }
 
 + (NSDateFormatter *)getDateFormatter {

@@ -10,9 +10,9 @@
 
 @interface DFTDebugScreenshot : NSObject
 
-+ (void)enableAutoCapture;
++ (BOOL)getTracking;
 
-+ (void)disableAutoCapture;
++ (void)setTraking:(BOOL)value;
 
 + (NSDateFormatter *)getDateFormatter;
 
