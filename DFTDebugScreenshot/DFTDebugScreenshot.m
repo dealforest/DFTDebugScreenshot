@@ -13,7 +13,8 @@
 
 @interface DFTDebugScreenshot()
 
-@property (nonatomic, assign) BOOL tracking;
+@property (nonatomic, assign, getter = isForeground) BOOL foreground;
+@property (nonatomic, assign, getter = isTracking) BOOL tracking;
 @property (nonatomic, strong) NSMutableDictionary *drawAttributes;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, copy) void (^completionBlock)(NSString *, UIImage *);
@@ -57,7 +58,7 @@
 #pragma mark class method
 
 + (BOOL)getTracking {
-    return [DFTDebugScreenshot sharedInstance].tracking;
+    return [DFTDebugScreenshot sharedInstance].isTracking;
 }
 
 + (void)setTraking:(BOOL)value {
@@ -67,15 +68,29 @@
     }
     else if (value == YES) {
         instance.tracking = value;
-        [[NSNotificationCenter defaultCenter] addObserver:[DFTDebugScreenshot sharedInstance]
-                                                 selector:@selector(handlingScreenShot:)
+        [[NSNotificationCenter defaultCenter] addObserver:instance
+                                                 selector:@selector(handlingUserDidTakeScreenshotNotification:)
                                                      name:UIApplicationUserDidTakeScreenshotNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:instance
+                                                 selector:@selector(handlingWillResignActiveNotification:)
+                                                     name:UIApplicationWillResignActiveNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:instance
+                                                 selector:@selector(handlingDidBecomeActiveNotification:)
+                                                     name:UIApplicationDidBecomeActiveNotification
                                                    object:nil];
     }
     else {
         instance.tracking = value;
-        [[NSNotificationCenter defaultCenter] removeObserver:[DFTDebugScreenshot sharedInstance]
+        [[NSNotificationCenter defaultCenter] removeObserver:instance
                                                         name:UIApplicationUserDidTakeScreenshotNotification
+                                                      object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:instance
+                                                        name:UIApplicationWillResignActiveNotification
+                                                      object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:instance
+                                                        name:UIApplicationDidBecomeActiveNotification
                                                       object:nil];
     }
 }
@@ -103,7 +118,7 @@
 + (void)capture {
     DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
     UIViewController *controller = [instance visibledViewController];
-    if ([controller respondsToSelector:@selector(outputDataOfScreenShoot)]) {
+    if (instance.isForeground && [controller respondsToSelector:@selector(outputDataOfScreenShoot)]) {
         id outputData = [controller performSelector:@selector(outputDataOfScreenShoot)];
         NSString *text = [outputData debugDescription];
         UIImage *image = [instance imageFromDebugText:text];
@@ -118,8 +133,16 @@
 #pragma mark -
 #pragma mark observer
 
-- (void)handlingScreenShot:(NSNotification *)notification {
+- (void)handlingUserDidTakeScreenshotNotification:(NSNotification *)notification {
     [DFTDebugScreenshot capture];
+}
+
+- (void)handlingWillResignActiveNotification:(NSNotification *)notification {
+    [DFTDebugScreenshot sharedInstance].foreground = NO;
+}
+
+- (void)handlingDidBecomeActiveNotification:(NSNotification *)notification {
+    [DFTDebugScreenshot sharedInstance].foreground = YES;
 }
 
 #pragma mark -
