@@ -14,12 +14,6 @@
 
 + (void)setTraking:(BOOL)value;
 
-+ (NSDateFormatter *)getDateFormatter;
-
-+ (void)setDateFomatter:(NSDateFormatter *)formatter;
-
-+ (void)configureDrawAttributes:(void (^)(NSMutableDictionary *))block;
-
 + (void)completionBlock:(void (^)(NSString *, UIImage *))block;
 
 + (void)capture;

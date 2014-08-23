@@ -8,6 +8,7 @@ Pod::Spec.new do |spec|
   spec.summary      = "Simple debug tool for screenshot."
   spec.source       = { :git => "https://github.com/dealforest/DFTDebugScreenshot.git" }
   spec.source_files = 'DFTDebugScreenshot/*.{h,m}'
+  spec.resources    = 'DFTDebugScreenshot/*.{xib}'
   spec.framework    = 'AssetsLibrary'
   spec.requires_arc = true
 end

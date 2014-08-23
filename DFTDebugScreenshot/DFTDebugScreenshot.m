@@ -7,6 +7,7 @@
 //
 
 #import "DFTDebugScreenshot.h"
+#import "DFTDebugScreenshotView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #define DEFAULT_FONT_SIZE 12.f
@@ -15,8 +16,6 @@
 
 @property (nonatomic, assign, getter = isForeground) BOOL foreground;
 @property (nonatomic, assign, getter = isTracking) BOOL tracking;
-@property (nonatomic, strong) NSMutableDictionary *drawAttributes;
-@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, copy) void (^completionBlock)(NSString *, UIImage *);
 
 + (instancetype)sharedInstance;
@@ -32,26 +31,6 @@
         instance = [DFTDebugScreenshot new];
     });
     return instance;
-}
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-        paragraphStyle.alignment = NSTextAlignmentLeft;
-        self.drawAttributes = [@{
-                                NSFontAttributeName: [UIFont systemFontOfSize:DEFAULT_FONT_SIZE],
-                                NSParagraphStyleAttributeName: paragraphStyle,
-                                } mutableCopy];
-
-        NSDateFormatter *formatter = [NSDateFormatter new];
-        [formatter setLocale:[NSLocale systemLocale]];
-        [formatter setTimeZone:[NSTimeZone systemTimeZone]];
-        [formatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
-        self.dateFormatter = formatter;
-    }
-    return self;
 }
 
 #pragma mark -
@@ -95,20 +74,6 @@
     }
 }
 
-+ (NSDateFormatter *)getDateFormatter {
-    return [DFTDebugScreenshot sharedInstance].dateFormatter;
-}
-
-+ (void)setDateFomatter:(NSDateFormatter *)formatter {
-    [DFTDebugScreenshot sharedInstance].dateFormatter = formatter;
-}
-
-+ (void)configureDrawAttributes:(void (^)(NSMutableDictionary *))block {
-    if (block) {
-        block([DFTDebugScreenshot sharedInstance].drawAttributes);
-    }
-}
-
 + (void)completionBlock:(void (^)(NSString *, UIImage *))block {
     if (block) {
         [DFTDebugScreenshot sharedInstance].completionBlock = block;
@@ -120,15 +85,19 @@
     UIViewController *controller = [instance visibledViewController];
     if (instance.isForeground && [controller respondsToSelector:@selector(outputDataOfScreenShoot)]) {
         id outputData = [controller performSelector:@selector(outputDataOfScreenShoot)];
-        NSString *text = [outputData debugDescription];
-        UIImage *image = [instance imageFromDebugText:text];
+
+        NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
+        DFTDebugScreenshotView *debugView = [views firstObject];
+        [debugView setTitleText:NSStringFromClass([controller class])
+                        message:[outputData debugDescription]];
+
+        UIImage *image = [debugView convertToImage];
         [instance saveImageToPhotosAlbum:image];
         if (instance.completionBlock) {
-            instance.completionBlock(text, image);
+            instance.completionBlock([outputData debugDescription], image);
         }
     }
 }
-
 
 #pragma mark -
 #pragma mark observer
@@ -157,26 +126,6 @@
         controller = [(UINavigationController *)controller visibleViewController];
     }
     return controller;
-}
-
-- (UIImage *)imageFromDebugText:(NSObject *)object {
-    NSString *text = [object debugDescription];
-    CGSize size = [text sizeWithAttributes:self.drawAttributes];
-
-    if (UIGraphicsBeginImageContextWithOptions != NULL) {
-        UIGraphicsBeginImageContextWithOptions(size, NO, 0.f);
-    }
-    else {
-        UIGraphicsBeginImageContext(size);
-    }
-
-    [text drawInRect:CGRectMake(0.f, 0.f, size.width, size.height)
-      withAttributes:self.drawAttributes];
-
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    return image;
 }
 
 - (void)saveImageToPhotosAlbum:(UIImage *)image {
