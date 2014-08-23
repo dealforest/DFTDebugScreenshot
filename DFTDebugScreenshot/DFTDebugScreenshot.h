@@ -8,13 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+@interface UIViewController (DFTDebugScreenshotAdditions)
+
+- (id)dft_debugObjectOfScreenshot;
+
+@end
+
 @interface DFTDebugScreenshot : NSObject
 
 + (BOOL)getTracking;
 
 + (void)setTraking:(BOOL)value;
 
-+ (void)completionBlock:(void (^)(NSString *, UIImage *))block;
++ (void)completionBlock:(void (^)(id, UIImage *))block;
 
 + (void)capture;
 

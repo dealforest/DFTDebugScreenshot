@@ -38,7 +38,7 @@
 #pragma mark -
 #pragma mark DFTDebugScreenShot
 
-- (id)outputDataOfScreenShoot {
+- (id)dft_debugObjectOfScreenshot {
     return self.data;
 }
 

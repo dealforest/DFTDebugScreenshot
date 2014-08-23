@@ -36,9 +36,9 @@
 }
 
 #pragma mark -
-#pragma mark DFTDebugScreenShot
+#pragma mark DFTDebugScreenshot
 
-- (id)outputDataOfScreenShoot {
+- (id)dft_debugObjectOfScreenshot {
     return [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
 }
 

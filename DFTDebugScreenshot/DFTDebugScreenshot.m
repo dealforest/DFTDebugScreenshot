@@ -10,13 +10,11 @@
 #import "DFTDebugScreenshotView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
-#define DEFAULT_FONT_SIZE 12.f
-
 @interface DFTDebugScreenshot()
 
 @property (nonatomic, assign, getter = isForeground) BOOL foreground;
 @property (nonatomic, assign, getter = isTracking) BOOL tracking;
-@property (nonatomic, copy) void (^completionBlock)(NSString *, UIImage *);
+@property (nonatomic, copy) void (^completionBlock)(id, UIImage *);
 
 + (instancetype)sharedInstance;
 
@@ -74,7 +72,7 @@
     }
 }
 
-+ (void)completionBlock:(void (^)(NSString *, UIImage *))block {
++ (void)completionBlock:(void (^)(id, UIImage *))block {
     if (block) {
         [DFTDebugScreenshot sharedInstance].completionBlock = block;
     }
@@ -83,18 +81,18 @@
 + (void)capture {
     DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
     UIViewController *controller = [instance visibledViewController];
-    if (instance.isForeground && [controller respondsToSelector:@selector(outputDataOfScreenShoot)]) {
-        id outputData = [controller performSelector:@selector(outputDataOfScreenShoot)];
+    if (instance.isForeground && [controller respondsToSelector:@selector(dft_debugObjectOfScreenshot)]) {
+        id debugObject = [controller performSelector:@selector(dft_debugObjectOfScreenshot)];
 
         NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
         DFTDebugScreenshotView *debugView = [views firstObject];
         [debugView setTitleText:NSStringFromClass([controller class])
-                        message:[outputData debugDescription]];
+                        message:[debugObject debugDescription]];
 
         UIImage *image = [debugView convertToImage];
         [instance saveImageToPhotosAlbum:image];
         if (instance.completionBlock) {
-            instance.completionBlock([outputData debugDescription], image);
+            instance.completionBlock(debugObject, image);
         }
     }
 }
