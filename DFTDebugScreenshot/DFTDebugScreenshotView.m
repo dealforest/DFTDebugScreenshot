@@ -72,17 +72,16 @@
 
 - (void)resizeToFitSubviews
 {
-    CGRect frame = self.frame;
     CGSize size = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    self.frame = CGRectMake(
-                            CGRectGetMinX(frame),
-                            CGRectGetMinX(frame),
+
+    CGRect frame = self.frame;
+    frame.size = CGSizeMake(
                             MAX(CGRectGetWidth(frame), CGRectGetWidth(self.messageLabel.frame)),
                             MAX(CGRectGetHeight(frame), size.height)
                             );
-    [self.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-        [view layoutIfNeeded];
-    }];
+    self.frame = frame;
+
+    [self.subviews makeObjectsPerformSelector:@selector(layoutIfNeeded)];
 }
 
 @end
