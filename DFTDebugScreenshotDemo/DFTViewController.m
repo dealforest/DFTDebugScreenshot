@@ -10,6 +10,8 @@
 
 @interface DFTViewController ()
 
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+
 @end
 
 @implementation DFTViewController
@@ -26,7 +28,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,11 +36,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    NSURL *url = [NSURL URLWithString:@"http://blog.dealforest.net"];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
 #pragma mark -
 #pragma mark DFTDebugScreenShot
 
 - (id)dft_debugObjectOfScreenshot {
-    return self.data;
+    return @{
+             @"data": self.data,
+             @"webView": @{
+                     @"title": [self.webView stringByEvaluatingJavaScriptFromString:@"document.title"],
+                     @"cookie": [self.webView stringByEvaluatingJavaScriptFromString:@"document.cookie"],
+                     @"userAgent": [self.webView stringByEvaluatingJavaScriptFromString:@"window.navigator.userAgent"],
+                     @"scrollOffset": @{
+                             @"x": [self.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.scrollLeft || document.body.scrollLeft"],
+                             @"y": [self.webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.scrollTop || document.body.scrollTop"]
+                             },
+                     },
+             };
 }
 
 /*

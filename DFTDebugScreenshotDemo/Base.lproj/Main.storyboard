@@ -38,7 +38,7 @@
             </objects>
             <point key="canvasLocation" x="552" y="-84"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - DFTViewController-->
         <scene sceneID="ymf-tg-t7A">
             <objects>
                 <viewController id="pdL-aw-247" customClass="DFTViewController" sceneMemberID="viewController">
@@ -50,29 +50,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DFTViewController" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LDe-mM-Iim">
-                                <rect key="frame" x="60" y="180" width="200" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C7S-Rr-EOZ">
-                                <rect key="frame" x="60" y="218" width="200" height="30"/>
+                                <rect key="frame" x="60" y="300" width="200" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <webView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vIq-mL-S2q">
+                                <rect key="frame" x="40" y="64" width="240" height="230"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vIq-mL-S2q" firstAttribute="leading" secondItem="cVU-jq-lMf" secondAttribute="leading" id="fJ1-UO-Fbr"/>
+                            <constraint firstAttribute="trailing" secondItem="vIq-mL-S2q" secondAttribute="trailing" id="mqw-8I-Gnr"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="xIm-PN-mTD">
+                    <navigationItem key="navigationItem" title="DFTViewController" id="xIm-PN-mTD">
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="LZ0-D9-K72">
                             <connections>
                                 <action selector="touchedCaptureButton:" destination="pdL-aw-247" id="geK-AH-7p1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="webView" destination="vIq-mL-S2q" id="wEZ-5V-klk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qrw-Nt-vjj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

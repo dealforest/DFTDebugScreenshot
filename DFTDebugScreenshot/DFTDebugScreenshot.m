@@ -84,13 +84,16 @@
     if (instance.isForeground && [controller respondsToSelector:@selector(dft_debugObjectOfScreenshot)]) {
         id debugObject = [controller performSelector:@selector(dft_debugObjectOfScreenshot)];
 
+        NSString *message = [@"" mutableCopy];
+        message = [message stringByAppendingString:[instance formatStringOfDebugObject:debugObject]];
+        message = [message stringByAppendingString:[instance formatStringOfConstraints:controller.view]];
+
         NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
         DFTDebugScreenshotView *debugView = [views firstObject];
-        [debugView setTitleText:NSStringFromClass([controller class])
-                        message:[debugObject debugDescription]];
-
+        [debugView setTitleText:NSStringFromClass([controller class]) message:message];
         UIImage *image = [debugView convertToImage];
         [instance saveImageToPhotosAlbum:image];
+
         if (instance.completionBlock) {
             instance.completionBlock(debugObject, image);
         }
@@ -167,6 +170,35 @@
             return NO;
         }
     }
+}
+
+- (NSString *)formatStringOfDebugObject:(id)debugObject {
+    return [NSString stringWithFormat:@"[debug object]\n%@\n\n", [debugObject description]];
+}
+
+- (NSString *)formatStringOfConstraints:(UIView *)view {
+    NSString * (^formatView)(UIView *, NSUInteger) = ^(UIView *view, NSUInteger nestLevel) {
+        //TODO: support UITabelView and UICollectionView
+        NSString *prefix = [@"" stringByPaddingToLength:nestLevel * 4 withString:@" " startingAtIndex:0];
+        NSMutableString *string = [@"" mutableCopy];
+        string = [string stringByAppendingFormat:@"%@- %@\n", prefix, [view description]];
+        if ([view.constraints count] > 0) {
+            for (NSLayoutConstraint *constraint in view.constraints) {
+                string = [string stringByAppendingFormat:@"%@    * %@\n", prefix, constraint];
+            }
+        }
+        else {
+            string = [string stringByAppendingFormat:@"%@    * none\n", prefix];
+        }
+        return string;
+    };
+
+    NSMutableString *string = [@"[constrains]\n" mutableCopy];
+    string = [string stringByAppendingString:formatView(view, 0)];
+    for (UIView *subview in view.subviews) {
+        string = [string stringByAppendingString:formatView(subview, 1)];
+    }
+    return [string stringByAppendingString:@"\n"];
 }
 
 - (void)showAlertWithMessage:(NSString *)message {
