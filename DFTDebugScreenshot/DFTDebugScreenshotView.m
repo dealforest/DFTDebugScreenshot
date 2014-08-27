@@ -24,6 +24,7 @@
     CGRect frame = self.messageLabel.frame;
     frame.size.width = frame.size.height = 0.f;
     self.messageLabel.frame = frame;
+    self.messageLabel.preferredMaxLayoutWidth = HUGE_VAL;
 
     NSDateFormatter *formatter = [NSDateFormatter new];
     [formatter setDateStyle:NSDateFormatterShortStyle];
@@ -76,7 +77,7 @@
 
     CGRect frame = self.frame;
     frame.size = CGSizeMake(
-                            MAX(CGRectGetWidth(frame), CGRectGetWidth(self.messageLabel.frame)),
+                            MAX(CGRectGetWidth(frame), size.width),
                             MAX(CGRectGetHeight(frame), size.height)
                             );
     self.frame = frame;
