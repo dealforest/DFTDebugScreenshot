@@ -64,4 +64,8 @@
     [DFTDebugScreenshot capture];
 }
 
+- (IBAction)touchedLoggingButton:(id)sender {
+    DFTDebugLog;
+}
+
 @end

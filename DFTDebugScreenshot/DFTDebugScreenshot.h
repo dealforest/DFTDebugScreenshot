@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define DFTDebugLog NSLog(@"<DFTDebugLog> - %@", [DFTDebugScreenshot debugMessage]);
+
 @interface UIViewController (DFTDebugScreenshotAdditions)
 
 - (id)dft_debugObjectOfScreenshot;
@@ -23,5 +25,7 @@
 + (void)completionBlock:(void (^)(id, UIImage *))block;
 
 + (void)capture;
+
++ (NSString *)debugMessage;
 
 @end

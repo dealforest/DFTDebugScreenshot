@@ -81,23 +81,25 @@
 + (void)capture {
     DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
     UIViewController *controller = [instance visibledViewController];
-    if (instance.isForeground && [controller respondsToSelector:@selector(dft_debugObjectOfScreenshot)]) {
-        id debugObject = [controller performSelector:@selector(dft_debugObjectOfScreenshot)];
-
-        NSString *message = [@"" mutableCopy];
-        message = [message stringByAppendingString:[instance formatStringOfDebugObject:debugObject]];
-        message = [message stringByAppendingString:[instance formatStringOfConstraints:controller.view]];
-
+    if (instance.isForeground) {
         NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
         DFTDebugScreenshotView *debugView = [views firstObject];
-        [debugView setTitleText:NSStringFromClass([controller class]) message:message];
+        [debugView setTitleText:NSStringFromClass([controller class])
+                        message:[instance debugMessageFromController:controller]];
+
         UIImage *image = [debugView convertToImage];
         [instance saveImageToPhotosAlbum:image];
 
         if (instance.completionBlock) {
-            instance.completionBlock(debugObject, image);
+            instance.completionBlock([instance debugObjectFromController:controller], image);
         }
     }
+}
+
++ (NSString *)debugMessage {
+    DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
+    UIViewController *controller = [instance visibledViewController];
+    return [instance debugMessageFromController:controller];
 }
 
 #pragma mark -
@@ -127,6 +129,23 @@
         controller = [(UINavigationController *)controller visibleViewController];
     }
     return controller;
+}
+
+- (NSString *)debugMessageFromController:(UIViewController *)controller {
+    NSString *string = [@"" mutableCopy];
+
+    id debugObject = [self debugObjectFromController:controller] ?: @"none";
+    string = [string stringByAppendingString:[self formatStringOfDebugObject:debugObject]];
+
+    string = [string stringByAppendingString:[self formatStringOfConstraints:controller.view]];
+
+    return string;
+}
+
+- (id)debugObjectFromController:(UIViewController *)controller {
+    return [controller respondsToSelector:@selector(dft_debugObjectOfScreenshot)]
+        ? [controller performSelector:@selector(dft_debugObjectOfScreenshot)]
+        : nil;
 }
 
 - (void)saveImageToPhotosAlbum:(UIImage *)image {
