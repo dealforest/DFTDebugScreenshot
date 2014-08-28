@@ -36,6 +36,17 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
     return instance;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.foreground = YES;
+        self.tracking = NO;
+        self.analyzeAutoLayout = NO;
+        self.enableAlert = YES;
+    }
+    return self;
+}
+
 #pragma mark -
 #pragma mark class method
 
