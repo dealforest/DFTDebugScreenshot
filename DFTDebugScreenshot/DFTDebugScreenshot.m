@@ -10,6 +10,9 @@
 #import "DFTDebugScreenshotView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
+static NSString * const kDFTDebugScreenshotBunbleName = @"DFTDebugScreenshot";
+static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLocalizable";
+
 @interface DFTDebugScreenshot()
 
 @property (nonatomic, assign, getter = isForeground) BOOL foreground;
@@ -151,10 +154,10 @@
          ^(NSURL *assetURL, NSError *error){
              ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
              if (status == ALAuthorizationStatusDenied) {
-                 [self showAlertWithMessage:@"写真へのアクセスが許可されていません。\n設定 > 一般 > 機能制限で許可してください。"];
+                 [self showAlertWithLocalizedKey:@"DENY_RESTRINCTIONS"];
              }
              else {
-                 [self showAlertWithMessage:@"フォトアルバムへ保存しました。"];
+                 [self showAlertWithLocalizedKey:@"SAVED_PHOTO"];
              }
          }];
     }
@@ -166,17 +169,14 @@
             return YES;
         }
         case ALAuthorizationStatusNotDetermined: {
-            // 写真へのアクセスを許可するか選択されていない。許可されるかわからないがYESにしておく
             return YES;
         }
         case ALAuthorizationStatusRestricted: {
-            // 設定 > 一般 > 機能制限で利用が制限されている
-            [self showAlertWithMessage:@"写真へのアクセスが許可されていません。\n設定 > 一般 > 機能制限で許可してください。"];
+            [self showAlertWithLocalizedKey:@"DENY_RESTRINCTIONS"];
             return NO;
         }
         case ALAuthorizationStatusDenied: {
-            // 設定 > プライバシー > 写真で利用が制限されている
-            [self showAlertWithMessage:@"写真へのアクセスが許可されていません。\n設定 > プライバシー > 写真で許可してください。"];
+            [self showAlertWithLocalizedKey:@"DENY_PRIVACY"];
             return NO;
         }
         default: {
@@ -195,13 +195,15 @@
         NSString *prefix = [@"" stringByPaddingToLength:nestLevel * 4 withString:@" " startingAtIndex:0];
         NSMutableString *string = [@"" mutableCopy];
         string = [string stringByAppendingFormat:@"%@- %@\n", prefix, [view description]];
+
+        prefix = [@"" stringByPaddingToLength:(nestLevel + 1) * 4 withString:@" " startingAtIndex:0];
         if ([view.constraints count] > 0) {
             for (NSLayoutConstraint *constraint in view.constraints) {
-                string = [string stringByAppendingFormat:@"%@    * %@\n", prefix, constraint];
+                string = [string stringByAppendingFormat:@"%@* %@\n", prefix, constraint];
             }
         }
         else {
-            string = [string stringByAppendingFormat:@"%@    * none\n", prefix];
+            string = [string stringByAppendingFormat:@"%@* none\n", prefix, prefix];
         }
         return string;
     };
@@ -214,13 +216,19 @@
     return [string stringByAppendingString:@"\n"];
 }
 
-- (void)showAlertWithMessage:(NSString *)message {
+- (void)showAlertWithLocalizedKey:(NSString *)key {
+    NSString *message = NSLocalizedStringFromTableInBundle(key, kDFTDebugScreenshotStringTable, [self bundle], nil);
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSStringFromClass([self class])
                                                         message:message
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
     [alertView show];
+}
+
+- (NSBundle *)bundle {
+    NSString *path = [[NSBundle mainBundle] pathForResource:kDFTDebugScreenshotBunbleName ofType:@"bundle"];
+    return [NSBundle bundleWithPath:path];
 }
 
 @end
