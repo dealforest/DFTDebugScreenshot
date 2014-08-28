@@ -17,7 +17,8 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
 
 @property (nonatomic, assign, getter = isForeground) BOOL foreground;
 @property (nonatomic, assign, getter = isTracking) BOOL tracking;
-@property (nonatomic, assign, getter = isAnalyzeAutoLayout) BOOL analyzeAutoLayout;
+@property (nonatomic, assign) BOOL analyzeAutoLayout;
+@property (nonatomic, assign) BOOL enableAlert;
 @property (nonatomic, copy) void (^completionBlock)(UIViewController *, id, UIImage *);
 
 + (instancetype)sharedInstance;
@@ -38,7 +39,7 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
 #pragma mark -
 #pragma mark class method
 
-+ (BOOL)getTracking {
++ (BOOL)isTracking {
     return [DFTDebugScreenshot sharedInstance].isTracking;
 }
 
@@ -77,11 +78,19 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
 }
 
 + (BOOL)getAnalyzeAutoLayout {
-    [DFTDebugScreenshot sharedInstance].isAnalyzeAutoLayout;
+    return [DFTDebugScreenshot sharedInstance].analyzeAutoLayout;
 }
 
 + (void)setAnalyzeAutoLayout:(BOOL)value {
     [DFTDebugScreenshot sharedInstance].analyzeAutoLayout = value;
+}
+
++ (BOOL)getEnableAlert {
+    return [DFTDebugScreenshot sharedInstance].enableAlert;
+}
+
++ (void)setEnableAlert:(BOOL)value {
+    [DFTDebugScreenshot sharedInstance].enableAlert = value;
 }
 
 + (void)completionBlock:(void (^)(UIViewController *, id, UIImage *))block {
@@ -100,7 +109,7 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
 
         NSMutableString *message = [@"" mutableCopy];
         [message appendString:[instance formatStringOfDebugObject:debugObject]];
-        if (instance.isAnalyzeAutoLayout) {
+        if (instance.analyzeAutoLayout) {
             [message appendString:[instance formatStringOfConstraints:controller.view]];
         }
 
@@ -217,6 +226,8 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
 }
 
 - (void)showAlertWithLocalizedKey:(NSString *)key {
+    if (!self.enableAlert) return;
+
     NSString *message = NSLocalizedStringFromTableInBundle(key, kDFTDebugScreenshotStringTable, [self bundle], nil);
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSStringFromClass([self class])
                                                         message:message

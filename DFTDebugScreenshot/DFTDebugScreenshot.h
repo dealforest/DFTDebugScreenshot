@@ -16,13 +16,17 @@
 
 @interface DFTDebugScreenshot : NSObject
 
-+ (BOOL)getTracking;
++ (BOOL)isTracking;
 
 + (void)setTraking:(BOOL)value;
 
 + (BOOL)getAnalyzeAutoLayout;
 
 + (void)setAnalyzeAutoLayout:(BOOL)value;
+
++ (BOOL)getEnableAlert;
+
++ (void)setEnableAlert:(BOOL)value;
 
 + (void)completionBlock:(void (^)(UIViewController *, id, UIImage *))block;
 
