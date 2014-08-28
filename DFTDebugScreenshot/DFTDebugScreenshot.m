@@ -15,7 +15,7 @@
 @property (nonatomic, assign, getter = isForeground) BOOL foreground;
 @property (nonatomic, assign, getter = isTracking) BOOL tracking;
 @property (nonatomic, assign, getter = isAnalyzeAutoLayout) BOOL analyzeAutoLayout;
-@property (nonatomic, copy) void (^completionBlock)(id, UIImage *);
+@property (nonatomic, copy) void (^completionBlock)(UIViewController *, id, UIImage *);
 
 + (instancetype)sharedInstance;
 
@@ -81,7 +81,7 @@
     [DFTDebugScreenshot sharedInstance].analyzeAutoLayout = value;
 }
 
-+ (void)completionBlock:(void (^)(id, UIImage *))block {
++ (void)completionBlock:(void (^)(UIViewController *, id, UIImage *))block {
     if (block) {
         [DFTDebugScreenshot sharedInstance].completionBlock = block;
     }
@@ -108,7 +108,7 @@
         [instance saveImageToPhotosAlbum:image];
 
         if (instance.completionBlock) {
-            instance.completionBlock(debugObject, image);
+            instance.completionBlock(controller, debugObject, image);
         }
     }
 }

@@ -24,7 +24,7 @@
 
 + (void)setAnalyzeAutoLayout:(BOOL)value;
 
-+ (void)completionBlock:(void (^)(id, UIImage *))block;
++ (void)completionBlock:(void (^)(UIViewController *, id, UIImage *))block;
 
 + (void)capture;
 
