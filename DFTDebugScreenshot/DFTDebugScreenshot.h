@@ -20,6 +20,10 @@
 
 + (void)setTraking:(BOOL)value;
 
++ (BOOL)getAnalyzeAutoLayout;
+
++ (void)setAnalyzeAutoLayout:(BOOL)value;
+
 + (void)completionBlock:(void (^)(id, UIImage *))block;
 
 + (void)capture;

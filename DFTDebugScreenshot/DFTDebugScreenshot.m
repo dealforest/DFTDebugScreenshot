@@ -14,6 +14,7 @@
 
 @property (nonatomic, assign, getter = isForeground) BOOL foreground;
 @property (nonatomic, assign, getter = isTracking) BOOL tracking;
+@property (nonatomic, assign, getter = isAnalyzeAutoLayout) BOOL analyzeAutoLayout;
 @property (nonatomic, copy) void (^completionBlock)(id, UIImage *);
 
 + (instancetype)sharedInstance;
@@ -72,6 +73,14 @@
     }
 }
 
++ (BOOL)getAnalyzeAutoLayout {
+    [DFTDebugScreenshot sharedInstance].isAnalyzeAutoLayout;
+}
+
++ (void)setAnalyzeAutoLayout:(BOOL)value {
+    [DFTDebugScreenshot sharedInstance].analyzeAutoLayout = value;
+}
+
 + (void)completionBlock:(void (^)(id, UIImage *))block {
     if (block) {
         [DFTDebugScreenshot sharedInstance].completionBlock = block;
@@ -81,12 +90,16 @@
 + (void)capture {
     DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
     UIViewController *controller = [instance visibledViewController];
-    if (instance.isForeground && [controller respondsToSelector:@selector(dft_debugObjectOfScreenshot)]) {
-        id debugObject = [controller performSelector:@selector(dft_debugObjectOfScreenshot)];
+    if (instance.isForeground) {
+        id debugObject = [controller respondsToSelector:@selector(dft_debugObjectOfScreenshot)]
+            ? [controller performSelector:@selector(dft_debugObjectOfScreenshot)]
+            : nil;
 
-        NSString *message = [@"" mutableCopy];
-        message = [message stringByAppendingString:[instance formatStringOfDebugObject:debugObject]];
-        message = [message stringByAppendingString:[instance formatStringOfConstraints:controller.view]];
+        NSMutableString *message = [@"" mutableCopy];
+        [message appendString:[instance formatStringOfDebugObject:debugObject]];
+        if (instance.isAnalyzeAutoLayout) {
+            [message appendString:[instance formatStringOfConstraints:controller.view]];
+        }
 
         NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
         DFTDebugScreenshotView *debugView = [views firstObject];
