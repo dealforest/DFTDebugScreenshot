@@ -74,14 +74,7 @@
 - (void)resizeToFitSubviews
 {
     CGSize size = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-
-    CGRect frame = self.frame;
-    frame.size = CGSizeMake(
-                            MAX(CGRectGetWidth(frame), size.width),
-                            MAX(CGRectGetHeight(frame), size.height)
-                            );
-    self.frame = frame;
-
+    self.frame = CGRectUnion(self.frame, CGRectMake(0.f, 0.f, size.width, size.height));
     [self.subviews makeObjectsPerformSelector:@selector(layoutIfNeeded)];
 }
 
