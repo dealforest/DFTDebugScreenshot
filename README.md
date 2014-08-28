@@ -17,12 +17,12 @@ It will write out the debug image of the ViewController being displayed.
 
 1. add fields under DFTDebugScreenshot/* to your project.
 2. import DFTDebugScreenshot.h
-3. write to the code(`- [UIViewController dft_debugObjectOfScreenshot]`) for the debug information.
+3. write to the code(`- [UIViewController dft_debugObjectForDebugScreenshot]`) for the debug information.
 
 ```objective-c
 @implementation DFTViewController
 ... 
-- (id)dft_debugObjectOfScreenshot {
+- (id)dft_debugObjectForDebugScreenshot {
     return [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
 }
 ...
@@ -35,7 +35,7 @@ When you take a screenshot, and automatically write out the debug image.
 ```objective-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   ...
-  [DFTDebugScreenshot enableTracking];
+  [DFTDebugScreenshot setTracking:YES];
   ...
 }
 ```

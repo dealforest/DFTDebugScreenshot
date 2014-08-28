@@ -46,7 +46,7 @@
 #pragma mark -
 #pragma mark DFTDebugScreenShot
 
-- (id)dft_debugObjectOfScreenshot {
+- (id)dft_debugObjectForDebugScreenshot {
     return @{
              @"data": self.data,
              @"webView": @{

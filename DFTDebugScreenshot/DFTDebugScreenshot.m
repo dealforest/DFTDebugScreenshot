@@ -114,8 +114,8 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
     DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
     UIViewController *controller = [instance visibledViewController];
     if (instance.isForeground) {
-        id debugObject = [controller respondsToSelector:@selector(dft_debugObjectOfScreenshot)]
-            ? [controller performSelector:@selector(dft_debugObjectOfScreenshot)]
+        id debugObject = [controller respondsToSelector:@selector(dft_debugObjectForDebugScreenshot)]
+            ? [controller performSelector:@selector(dft_debugObjectForDebugScreenshot)]
             : nil;
 
         NSMutableString *message = [@"" mutableCopy];

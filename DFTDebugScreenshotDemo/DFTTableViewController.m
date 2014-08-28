@@ -43,7 +43,7 @@
 #pragma mark -
 #pragma mark DFTDebugScreenshot
 
-- (id)dft_debugObjectOfScreenshot {
+- (id)dft_debugObjectForDebugScreenshot {
     NSMutableArray *outputData = [@[] mutableCopy];
     for (NSIndexPath *indexPath in [self.tableView indexPathsForVisibleRows])
     {

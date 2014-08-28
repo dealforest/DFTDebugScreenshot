@@ -10,7 +10,7 @@
 
 @interface UIViewController (DFTDebugScreenshotAdditions)
 
-- (id)dft_debugObjectOfScreenshot;
+- (id)dft_debugObjectForDebugScreenshot;
 
 @end
 
