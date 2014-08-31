@@ -214,24 +214,24 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
         //TODO: support UITabelView and UICollectionView
         NSString *prefix = [@"" stringByPaddingToLength:nestLevel * 4 withString:@" " startingAtIndex:0];
         NSMutableString *string = [@"" mutableCopy];
-        string = [string stringByAppendingFormat:@"%@- %@\n", prefix, [view description]];
+        [string appendFormat:@"%@- %@\n", prefix, [view description]];
 
         prefix = [@"" stringByPaddingToLength:(nestLevel + 1) * 4 withString:@" " startingAtIndex:0];
         if ([view.constraints count] > 0) {
             for (NSLayoutConstraint *constraint in view.constraints) {
-                string = [string stringByAppendingFormat:@"%@* %@\n", prefix, constraint];
+                [string appendFormat:@"%@* %@\n", prefix, constraint];
             }
         }
         else {
-            string = [string stringByAppendingFormat:@"%@* none\n", prefix, prefix];
+            [string appendFormat:@"%@* none\n", prefix];
         }
         return string;
     };
 
     NSMutableString *string = [@"[constrains]\n" mutableCopy];
-    string = [string stringByAppendingString:formatView(view, 0)];
+    [string appendString:formatView(view, 0)];
     for (UIView *subview in view.subviews) {
-        string = [string stringByAppendingString:formatView(subview, 1)];
+        [string appendString:formatView(subview, 1)];
     }
     return [string stringByAppendingString:@"\n"];
 }

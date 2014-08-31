@@ -438,6 +438,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DFTDebugScreenshotDemo/DFTDebugScreenshotDemo-Prefix.pch";
 				INFOPLIST_FILE = "DFTDebugScreenshotDemo/DFTDebugScreenshotDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = DFTDebugScreenShotDemo;
 				WRAPPER_EXTENSION = app;
 			};
@@ -452,6 +453,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DFTDebugScreenshotDemo/DFTDebugScreenshotDemo-Prefix.pch";
 				INFOPLIST_FILE = "DFTDebugScreenshotDemo/DFTDebugScreenshotDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = DFTDebugScreenShotDemo;
 				WRAPPER_EXTENSION = app;
 			};
