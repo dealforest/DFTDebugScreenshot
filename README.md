@@ -15,9 +15,19 @@ It will write out the debug image of the ViewController being displayed.
 
 ## Usage
 
-1. add fields under DFTDebugScreenshot/* to your project.
-2. import DFTDebugScreenshot.h
-3. write to the code(`- [UIViewController dft_debugObjectForDebugScreenshot]`) for the debug information.
+1) In your Podfile:
+
+```
+pod 'DFTDebugScreenShot'
+```
+
+2) In your .m files:
+
+```
+#import <DFTDebugScreenshot/DFTDebugScreenshot.h>
+```
+
+3) write to the code(`- [UIViewController dft_debugObjectForDebugScreenshot]`) for the debug information.
 
 ```objective-c
 @implementation DFTViewController
@@ -49,18 +59,10 @@ It will write out the debug image at the timing at which you intended.
 }
 ```
 
-## Installing
+## Without CocoaPods 
 
-The best way to Install DFTDebugScreenShot is by using CocoaPods.
-```
-pod 'DFTDebugScreenshot'
-```
+If you don’t want to use CocoaPods you can use[CocoaPods Packager](https://github.com/CocoaPods/cocoapods-packager) to generate a static version of DFTDebugScreenshot and just embed that.
 
-### Without CocoaPods 
-
-- add files under `DFTDebugScreenshot/*` to your project.
-- add `AssetsLibrary.framework` to "Link Binary With Libraries" (in "Build Phases").
- 
 ## Demo
 
 ```shell
