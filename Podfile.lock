@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ./
 
 SPEC CHECKSUMS:
-  DFTDebugScreenshot: a93234817db3329f17ce8c5d57ead74971336d5c
+  DFTDebugScreenshot: 442324f2ddae617c3384faa9e4d07feeb41b049e
 
 COCOAPODS: 0.33.1
