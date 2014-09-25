@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^DFTDebugScreenshotCompletionBlock)(UIViewController *, UIImage *, id, UIImage *);
+
 @interface UIViewController (DFTDebugScreenshotAdditions)
 
 - (id)dft_debugObjectForDebugScreenshot;
@@ -28,7 +30,7 @@
 
 + (void)setEnableAlert:(BOOL)value;
 
-+ (void)completionBlock:(void (^)(UIViewController *, id, UIImage *))block;
++ (void)completionBlock:(DFTDebugScreenshotCompletionBlock)block;
 
 + (void)capture;
 

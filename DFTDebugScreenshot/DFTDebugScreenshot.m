@@ -19,7 +19,7 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
 @property (nonatomic, assign, getter = isTracking) BOOL tracking;
 @property (nonatomic, assign) BOOL analyzeAutoLayout;
 @property (nonatomic, assign) BOOL enableAlert;
-@property (nonatomic, copy) void (^completionBlock)(UIViewController *, id, UIImage *);
+@property (nonatomic, copy) DFTDebugScreenshotCompletionBlock completionBlock;
 
 + (instancetype)sharedInstance;
 
@@ -104,7 +104,7 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
     [DFTDebugScreenshot sharedInstance].enableAlert = value;
 }
 
-+ (void)completionBlock:(void (^)(UIViewController *, id, UIImage *))block {
++ (void)completionBlock:(DFTDebugScreenshotCompletionBlock)block {
     if (block) {
         [DFTDebugScreenshot sharedInstance].completionBlock = block;
     }
@@ -124,6 +124,9 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
             [message appendString:[instance formatStringOfConstraints:controller.view]];
         }
 
+        UIImage *screenshot = [instance loadScreenshot];
+        [instance saveImageToPhotosAlbum:screenshot];
+
         NSArray *views = [[instance bundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
         DFTDebugScreenshotView *debugView = [views firstObject];
         [debugView setTitleText:NSStringFromClass([controller class]) message:message];
@@ -131,7 +134,7 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
         [instance saveImageToPhotosAlbum:image];
 
         if (instance.completionBlock) {
-            instance.completionBlock(controller, debugObject, image);
+            instance.completionBlock(controller, screenshot, debugObject, image);
         }
     }
 }
@@ -167,7 +170,7 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
 
 - (void)saveImageToPhotosAlbum:(UIImage *)image {
     if ([self isEnablePhotoAccess]) {
-        ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+        ALAssetsLibrary* library = [ALAssetsLibrary new];
         [library writeImageToSavedPhotosAlbum:image.CGImage
                                   orientation:(ALAssetOrientation)image.imageOrientation
                               completionBlock:
@@ -181,6 +184,42 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
              }
          }];
     }
+}
+
+- (UIImage *)loadScreenshot {
+    // wait for saved the screenshot.
+    sleep(1);
+
+    UIImage __block *captureImage;
+    BOOL __block loding = YES;
+    while (loding) {
+        ALAssetsLibrary *library = [ALAssetsLibrary new];
+        [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
+                               usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+                                   [group setAssetsFilter:[ALAssetsFilter allPhotos]];
+                                   NSInteger lastPhotoIndex = [group numberOfAssets];
+                                   if (lastPhotoIndex > 0) {
+                                       [group enumerateAssetsAtIndexes:[NSIndexSet indexSetWithIndex:lastPhotoIndex -1]
+                                                               options:NSEnumerationConcurrent
+                                                            usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                                                                ALAssetRepresentation *representation = [result defaultRepresentation];
+                                                                UIImage *image = [UIImage imageWithCGImage:[representation fullScreenImage]
+                                                                                                     scale:[representation scale]
+                                                                                               orientation:(UIImageOrientation)[representation orientation]];
+                                                                if (!captureImage && image) {
+                                                                    captureImage = image;
+                                                                    *stop = YES;
+                                                                    loding = NO;
+                                                                }
+                                                            }];
+                                   }
+                               }
+                             failureBlock:^(NSError *error) {
+                                 loding = NO;
+                             }];
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
+    return captureImage;
 }
 
 - (BOOL)isEnablePhotoAccess {
