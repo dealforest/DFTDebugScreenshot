@@ -125,7 +125,6 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
         }
 
         UIImage *screenshot = [instance loadScreenshot];
-        [instance saveImageToPhotosAlbum:screenshot];
 
         NSArray *views = [[instance bundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
         DFTDebugScreenshotView *debugView = [views firstObject];

@@ -1,11 +1,11 @@
 Pod::Spec.new do |spec|
   spec.platform        = :ios, '7.0'
   spec.name            = 'DFTDebugScreenshot'
-  spec.version         = '0.0.2'
+  spec.version         = '0.0.3'
   spec.homepage        = 'https://github.com/dealforest/DFTDebugScreenshot'
   spec.authors         = { 'Toshihiro Morimoto' => 'dealforest.net@gmail.com' }
   spec.summary         = 'Simple debug tool for screenshot'
-  spec.source          = { :git => 'https://github.com/dealforest/DFTDebugScreenshot.git', :tag => '0.0.2' }
+  spec.source          = { :git => 'https://github.com/dealforest/DFTDebugScreenshot.git', :tag => '0.0.3' }
   spec.source_files    = 'DFTDebugScreenshot/*.{h,m}'
   spec.resource_bundle = {
     'DFTDebugScreenshot' => [
