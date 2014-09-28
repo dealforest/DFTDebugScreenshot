@@ -59,7 +59,10 @@ It will write out the debug image at the timing at which you intended.
 }
 ```
 
-## Without CocoaPods 
+### If you want to copy clipboard
+It is stored in the meta-data(EXIF:userComment),  please copy from the meta-data.
+
+## Without CocoaPods
 
 If you don’t want to use CocoaPods you can use[CocoaPods Packager](https://github.com/CocoaPods/cocoapods-packager) to generate a static version of DFTDebugScreenshot and just embed that.
 
