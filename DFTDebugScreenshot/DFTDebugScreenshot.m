@@ -9,9 +9,12 @@
 #import "DFTDebugScreenshot.h"
 #import "DFTDebugScreenshotView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <ImageIO/ImageIO.h>
+#import <MobileCoreServices/UTCoreTypes.h>
 
 static NSString * const kDFTDebugScreenshotBunbleName = @"DFTDebugScreenshot";
 static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLocalizable";
+static float const kCompressionQuality = 0.7;
 
 @interface DFTDebugScreenshot()
 
@@ -130,7 +133,7 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
         DFTDebugScreenshotView *debugView = [views firstObject];
         [debugView setTitleText:NSStringFromClass([controller class]) message:message];
         UIImage *image = [debugView convertToImage];
-        [instance saveImageToPhotosAlbum:image];
+        [instance saveImageToPhotosAlbum:image comment:message];
 
         if (instance.completionBlock) {
             instance.completionBlock(controller, screenshot, debugObject, image);
@@ -168,11 +171,28 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
 }
 
 - (void)saveImageToPhotosAlbum:(UIImage *)image {
+    [self saveImageToPhotosAlbum:image comment:nil];
+}
+
+- (void)saveImageToPhotosAlbum:(UIImage *)image comment:(NSString *)comment {
     if ([self isEnablePhotoAccess]) {
+        NSData *saveImageData = UIImageJPEGRepresentation(image, kCompressionQuality);
+        CGImageSourceRef imageRef = CGImageSourceCreateWithData((CFDataRef)saveImageData, nil);
+        NSDictionary *metadata = (__bridge NSDictionary*)CGImageSourceCopyPropertiesAtIndex(imageRef, 0, nil);
+        NSMutableDictionary *editMetaData = [[NSMutableDictionary alloc] initWithDictionary:metadata];
+
+        if (comment) {
+            if (editMetaData[(NSString *)kCGImagePropertyExifDictionary]) {
+                editMetaData[(NSString *)kCGImagePropertyExifDictionary][(NSString *)kCGImagePropertyExifUserComment] = comment;
+            } else {
+                editMetaData[(NSString *)kCGImagePropertyExifDictionary] = @{(NSString *)kCGImagePropertyExifUserComment : comment};
+            }
+        }
+        
         ALAssetsLibrary* library = [ALAssetsLibrary new];
-        [library writeImageToSavedPhotosAlbum:image.CGImage
-                                  orientation:(ALAssetOrientation)image.imageOrientation
-                              completionBlock:
+        [library writeImageDataToSavedPhotosAlbum:saveImageData
+                                         metadata:editMetaData
+                                  completionBlock:
          ^(NSURL *assetURL, NSError *error){
              ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
              if (status == ALAuthorizationStatusDenied) {
@@ -180,8 +200,7 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
              }
              else {
                  [self showAlertWithLocalizedKey:@"SAVED_PHOTO"];
-             }
-         }];
+             }}];
     }
 }
 
