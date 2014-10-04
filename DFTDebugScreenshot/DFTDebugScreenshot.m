@@ -273,7 +273,6 @@ static float const kCompressionQuality = 0.7;
     return controller;
 }
 
-
 - (void)showAlertWithLocalizedKey:(NSString *)key {
     if (!self.enableAlert) return;
 
@@ -293,19 +292,19 @@ static float const kCompressionQuality = 0.7;
 
 - (NSString *)debugMessageWithDebugObject:(id)debugObject {
     NSMutableString *message = [@"" mutableCopy];
-    [message appendString:[self formatStringOfDebugObject:debugObject]];
+    [message appendString:[self debugMessageForDebugObject:debugObject]];
     if (self.analyzeAutoLayout) {
         UIViewController *controller = [self visibledViewController];
-        [message appendString:[self formatStringOfConstraints:controller.view]];
+        [message appendString:[self debugMessageForConstraints:controller.view]];
     }
     return message;
 }
 
-- (NSString *)formatStringOfDebugObject:(id)debugObject {
+- (NSString *)debugMessageForDebugObject:(id)debugObject {
     return [NSString stringWithFormat:@"[debug object]\n%@\n\n", [debugObject description]];
 }
 
-- (NSString *)formatStringOfConstraints:(UIView *)view {
+- (NSString *)debugMessageForConstraints:(UIView *)view {
     //TODO: support nest subviews
     NSString * (^formatView)(UIView *, NSUInteger) = ^(UIView *view, NSUInteger nestLevel) {
         //TODO: support UITabelView and UICollectionView
