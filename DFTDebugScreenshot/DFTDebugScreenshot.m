@@ -136,7 +136,7 @@ static float const kCompressionQuality = 0.7;
     }
 }
 
-+ (id)unarchiveObjectWithDebugObjectHex:(NSString *)hex {
++ (id)unarchiveObjectWithHex:(NSString *)hex {
     hex = [hex lowercaseString];
     NSMutableData *data = [NSMutableData new];
     unsigned char whole_byte;
