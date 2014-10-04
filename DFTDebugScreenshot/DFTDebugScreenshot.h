@@ -34,4 +34,6 @@ typedef void (^DFTDebugScreenshotCompletionBlock)(UIViewController *, UIImage *,
 
 + (void)capture;
 
++ (id)unarchiveObjectWithDebugObjectHex:(NSString *)hex;
+
 @end
