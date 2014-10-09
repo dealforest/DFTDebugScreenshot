@@ -230,8 +230,8 @@ static float const kCompressionQuality = 0.7;
     NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:3.f];
     ALAssetsLibrary *library = [ALAssetsLibrary new];
     UIImage __block *captureImage;
-    BOOL __block loding = YES;
-    while (loding) {
+    BOOL __block loading = YES;
+    while (loading) {
         [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
                                usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
                                    [group setAssetsFilter:[ALAssetsFilter allPhotos]];
@@ -247,16 +247,16 @@ static float const kCompressionQuality = 0.7;
                                                                 if (!captureImage && image) {
                                                                     captureImage = image;
                                                                     *stop = YES;
-                                                                    loding = NO;
+                                                                    loading = NO;
                                                                 }
                                                             }];
                                    }
                                }
                              failureBlock:^(NSError *error) {
-                                 loding = NO;
+                                 loading = NO;
                              }];
         if ([[NSDate date] compare:timeout] == NSOrderedDescending) {
-            loding = NO;
+            loading = NO;
         }
         else {
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
