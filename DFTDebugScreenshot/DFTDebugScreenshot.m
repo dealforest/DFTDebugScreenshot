@@ -227,10 +227,11 @@ static float const kCompressionQuality = 0.7;
     // wait for saved the screenshot.
     sleep(1);
 
+    NSDate *timeout = [NSDate dateWithTimeIntervalSinceNow:3.f];
+    ALAssetsLibrary *library = [ALAssetsLibrary new];
     UIImage __block *captureImage;
     BOOL __block loding = YES;
     while (loding) {
-        ALAssetsLibrary *library = [ALAssetsLibrary new];
         [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
                                usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
                                    [group setAssetsFilter:[ALAssetsFilter allPhotos]];
@@ -254,7 +255,12 @@ static float const kCompressionQuality = 0.7;
                              failureBlock:^(NSError *error) {
                                  loding = NO;
                              }];
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        if ([[NSDate date] compare:timeout] == NSOrderedDescending) {
+            loding = NO;
+        }
+        else {
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        }
     }
     return captureImage;
 }
