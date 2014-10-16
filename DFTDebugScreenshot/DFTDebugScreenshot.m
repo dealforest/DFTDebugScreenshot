@@ -115,25 +115,8 @@ static float const kCompressionQuality = 0.7;
 
 + (void)capture {
     DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
-    UIViewController *controller = [instance visibledViewController];
-    if (instance.isForeground) {
-        id debugObject = [controller respondsToSelector:@selector(dft_debugObjectForDebugScreenshot)]
-            ? [controller performSelector:@selector(dft_debugObjectForDebugScreenshot)]
-            : nil;
-
-        UIImage *screenshot = [instance loadScreenshot];
-
-        NSArray *views = [[instance bundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
-        DFTDebugScreenshotView *debugView = [views firstObject];
-        [debugView setTitleText:NSStringFromClass([controller class])
-                        message:[instance debugMessageWithDebugObject:debugObject]];
-        UIImage *image = [debugView convertToImage];
-        [instance saveImageToPhotosAlbum:image debugObject:debugObject];
-
-        if (instance.completionBlock) {
-            instance.completionBlock(controller, screenshot, debugObject, image);
-        }
-    }
+    UIImage *screenshot = [instance captureCurrentScreen];
+    [instance process:screenshot];
 }
 
 + (id)unarchiveObjectWithHex:(NSString *)hex {
@@ -159,7 +142,8 @@ static float const kCompressionQuality = 0.7;
 #pragma mark observer
 
 - (void)handlingUserDidTakeScreenshotNotification:(NSNotification *)notification {
-    [DFTDebugScreenshot capture];
+    UIImage *screenshot = [self loadScreenshot] ?: [self captureCurrentScreen];
+    [self process:screenshot];
 }
 
 - (void)handlingWillResignActiveNotification:(NSNotification *)notification {
@@ -268,6 +252,21 @@ static float const kCompressionQuality = 0.7;
 #pragma mark -
 #pragma mark private
 
+- (void)process:(UIImage *)screenshot {
+    if (!self.isForeground) return;
+
+    UIViewController *controller = [self visibledViewController];
+    id debugObject = [controller respondsToSelector:@selector(dft_debugObjectForDebugScreenshot)]
+        ? [controller performSelector:@selector(dft_debugObjectForDebugScreenshot)]
+        : nil;
+
+    UIImage *debugImage = [self saveDebugImageWithDebugObject:debugObject controller:controller];
+
+    if (self.completionBlock) {
+        self.completionBlock(controller, screenshot, debugObject, debugImage);
+    }
+}
+
 - (UIViewController *)visibledViewController {
     UIViewController *controller = [UIApplication sharedApplication].keyWindow.rootViewController;
     while (controller.presentedViewController) {
@@ -336,6 +335,30 @@ static float const kCompressionQuality = 0.7;
         [string appendString:formatView(subview, 1)];
     }
     return [string stringByAppendingString:@"\n"];
+}
+
+- (UIImage *)captureCurrentScreen {
+    UIViewController *controller = [UIApplication sharedApplication].keyWindow.rootViewController;
+    CGRect frame = controller.view.frame;
+
+    UIGraphicsBeginImageContextWithOptions(frame.size, NO, 1.0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(context, -CGRectGetMinX(frame), -CGRectGetMinY(frame));
+    [controller.view drawViewHierarchyInRect:frame afterScreenUpdates:NO];
+    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return screenshot;
+}
+
+- (UIImage *)saveDebugImageWithDebugObject:(id)debugObject controller:(UIViewController *)controller {
+    NSArray *views = [[self bundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
+    DFTDebugScreenshotView *debugView = [views firstObject];
+    [debugView setTitleText:NSStringFromClass([controller class])
+                    message:[self debugMessageWithDebugObject:debugObject]];
+    UIImage *image = [debugView convertToImage];
+    [self saveImageToPhotosAlbum:image debugObject:debugObject];
+    return image;
 }
 
 @end
