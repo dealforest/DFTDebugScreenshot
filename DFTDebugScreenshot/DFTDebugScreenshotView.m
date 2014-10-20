@@ -1,6 +1,6 @@
 //
 //  DFTDebugScreenshotView.m
-//  DFTDebugScreenshotDemo
+//  DFTDebugScreenshot
 //
 //  Created by Toshihiro Morimoto on 8/22/14.
 //
