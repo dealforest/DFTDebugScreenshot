@@ -7,14 +7,9 @@
 //
 
 #import "DFTDebugScreenshot.h"
-#import "DFTDebugScreenshotView.h"
+#import "DFTDebugScreenshotHelper.h"
+#import "DFTDebugScreenshotDebugImageAdapter.h"
 #import <AssetsLibrary/AssetsLibrary.h>
-#import <ImageIO/ImageIO.h>
-#import <MobileCoreServices/UTCoreTypes.h>
-
-static NSString * const kDFTDebugScreenshotBunbleName = @"DFTDebugScreenshot";
-static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLocalizable";
-static float const kCompressionQuality = 0.7;
 
 @interface DFTDebugScreenshot()
 
@@ -157,57 +152,10 @@ static float const kCompressionQuality = 0.7;
 #pragma mark -
 #pragma mark AssetsLibrary
 
-- (BOOL)isEnablePhotosAccess {
-    switch ([ALAssetsLibrary authorizationStatus]) {
-        case ALAuthorizationStatusAuthorized: {
-            return YES;
-        }
-        case ALAuthorizationStatusNotDetermined: {
-            return YES;
-        }
-        case ALAuthorizationStatusRestricted: {
-            [self showAlertWithLocalizedKey:@"DENY_RESTRINCTIONS"];
-            return NO;
-        }
-        case ALAuthorizationStatusDenied: {
-            [self showAlertWithLocalizedKey:@"DENY_PRIVACY"];
-            return NO;
-        }
-        default: {
-            return NO;
-        }
-    }
-}
-
-- (void)saveImageToPhotosAlbum:(UIImage *)image {
-    [self saveImageToPhotosAlbum:image debugObject:nil];
-}
-
-- (void)saveImageToPhotosAlbum:(UIImage *)image debugObject:(id)debugObject {
-    if (![self isEnablePhotosAccess]) return;
-
-    NSData *imageData = UIImageJPEGRepresentation(image, kCompressionQuality);
-    CGImageSourceRef imageRef = CGImageSourceCreateWithData((CFDataRef)imageData, nil);
-
-    NSMutableDictionary *meta = [(__bridge NSDictionary*)CGImageSourceCopyPropertiesAtIndex(imageRef, 0, nil) mutableCopy];
-    NSMutableDictionary *exif = meta[(NSString *)kCGImagePropertyExifDictionary] ?: [@{} mutableCopy];
-    exif[(NSString *)kCGImagePropertyExifUserComment] = [@[
-                                                           [self debugMessageWithDebugObject:debugObject],
-                                                           [NSKeyedArchiver archivedDataWithRootObject:debugObject]
-                                                           ] componentsJoinedByString:@" "];
-    meta[(NSString *)kCGImagePropertyExifDictionary] = exif;
-
-    ALAssetsLibrary* library = [ALAssetsLibrary new];
-    [library writeImageDataToSavedPhotosAlbum:imageData
-                                     metadata:meta
-                              completionBlock:^(NSURL *assetURL, NSError *error){
-                                  ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
-                                  NSString *key = status == ALAuthorizationStatusDenied ? @"DENY_RESTRINCTIONS" : @"SAVED_PHOTO";
-                                  [self showAlertWithLocalizedKey:key];
-                                  }];
-}
-
 - (UIImage *)loadScreenshot {
+    if (![DFTDebugScreenshotHelper isEnablePhotosAccess])
+        return nil;
+
     // wait for saved the screenshot.
     sleep(1);
 
@@ -256,15 +204,8 @@ static float const kCompressionQuality = 0.7;
     if (!self.isForeground) return;
 
     UIViewController *controller = [self visibledViewController];
-    id debugObject = [controller respondsToSelector:@selector(dft_debugObjectForDebugScreenshot)]
-        ? [controller performSelector:@selector(dft_debugObjectForDebugScreenshot)]
-        : nil;
-
-    UIImage *debugImage = [self saveDebugImageWithDebugObject:debugObject controller:controller];
-
-    if (self.completionBlock) {
-        self.completionBlock(controller, screenshot, debugObject, debugImage);
-    }
+    DFTDebugScreenshotAdapter *adapter = [DFTDebugScreenshotDebugImageAdapter new];
+    [adapter process:controller screenshot:screenshot];
 }
 
 - (UIViewController *)visibledViewController {
@@ -276,65 +217,6 @@ static float const kCompressionQuality = 0.7;
         controller = [(UINavigationController *)controller visibleViewController];
     }
     return controller;
-}
-
-- (void)showAlertWithLocalizedKey:(NSString *)key {
-    if (!self.enableAlert) return;
-
-    NSString *message = NSLocalizedStringFromTableInBundle(key, kDFTDebugScreenshotStringTable, [self bundle], nil);
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSStringFromClass([self class])
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-    [alertView show];
-}
-
-- (NSBundle *)bundle {
-    NSString *path = [[NSBundle mainBundle] pathForResource:kDFTDebugScreenshotBunbleName ofType:@"bundle"];
-    return [NSBundle bundleWithPath:path];
-}
-
-- (NSString *)debugMessageWithDebugObject:(id)debugObject {
-    NSMutableString *message = [@"" mutableCopy];
-    [message appendString:[self debugMessageForDebugObject:debugObject]];
-    if (self.analyzeAutoLayout) {
-        UIViewController *controller = [self visibledViewController];
-        [message appendString:[self debugMessageForConstraints:controller.view]];
-    }
-    return message;
-}
-
-- (NSString *)debugMessageForDebugObject:(id)debugObject {
-    return [NSString stringWithFormat:@"[debug object]\n%@\n\n", [debugObject description]];
-}
-
-- (NSString *)debugMessageForConstraints:(UIView *)view {
-    //TODO: support nest subviews
-    NSString * (^formatView)(UIView *, NSUInteger) = ^(UIView *view, NSUInteger nestLevel) {
-        //TODO: support UITabelView and UICollectionView
-        NSString *prefix = [@"" stringByPaddingToLength:nestLevel * 4 withString:@" " startingAtIndex:0];
-        NSMutableString *string = [@"" mutableCopy];
-        [string appendFormat:@"%@- %@\n", prefix, [view description]];
-
-        prefix = [@"" stringByPaddingToLength:(nestLevel + 1) * 4 withString:@" " startingAtIndex:0];
-        if ([view.constraints count] > 0) {
-            for (NSLayoutConstraint *constraint in view.constraints) {
-                [string appendFormat:@"%@* %@\n", prefix, constraint];
-            }
-        }
-        else {
-            [string appendFormat:@"%@* none\n", prefix];
-        }
-        return string;
-    };
-
-    NSMutableString *string = [@"[constrains]\n" mutableCopy];
-    [string appendString:formatView(view, 0)];
-    for (UIView *subview in view.subviews) {
-        [string appendString:formatView(subview, 1)];
-    }
-    return [string stringByAppendingString:@"\n"];
 }
 
 - (UIImage *)captureCurrentScreen {
@@ -349,16 +231,6 @@ static float const kCompressionQuality = 0.7;
     UIGraphicsEndImageContext();
 
     return screenshot;
-}
-
-- (UIImage *)saveDebugImageWithDebugObject:(id)debugObject controller:(UIViewController *)controller {
-    NSArray *views = [[self bundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
-    DFTDebugScreenshotView *debugView = [views firstObject];
-    [debugView setTitleText:NSStringFromClass([controller class])
-                    message:[self debugMessageWithDebugObject:debugObject]];
-    UIImage *image = [debugView convertToImage];
-    [self saveImageToPhotosAlbum:image debugObject:debugObject];
-    return image;
 }
 
 @end
