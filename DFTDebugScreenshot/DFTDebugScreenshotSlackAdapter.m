@@ -8,6 +8,7 @@
 
 #import "DFTDebugScreenshotSlackAdapter.h"
 #import "DFTDebugScreenshot.h"
+#import "DFTDebugScreenshotHelper.h"
 
 #define DEFAULT_ICON_EMOJI @":iphone:"
 
@@ -51,7 +52,10 @@
                                                          error:nil];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
                                             completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                if (error) {
+                                                if (!error) {
+                                                    [DFTDebugScreenshotHelper showAlertWithLocalizedKey:@"SUCCESS_REQUEST"];
+                                                }
+                                                else {
                                                     NSLog(@"%@", error);
                                                 }
                                                 [session invalidateAndCancel];

@@ -18,6 +18,6 @@
 @property NSString *iconEmoji;
 @property NSURL *iconURL;
 
-- (instancetype)initWithIncomingWebHookURL:(NSString *)requestURL;
+- (instancetype)initWithIncomingWebHookURL:(NSURL *)requestURL;
 
 @end
