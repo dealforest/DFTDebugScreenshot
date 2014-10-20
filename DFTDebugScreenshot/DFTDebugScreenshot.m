@@ -8,6 +8,7 @@
 
 #import "DFTDebugScreenshot.h"
 #import "DFTDebugScreenshotHelper.h"
+#import "DFTDebugScreenshotAdapter.h"
 #import "DFTDebugScreenshotDebugImageAdapter.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
@@ -15,9 +16,8 @@
 
 @property (nonatomic, assign, getter = isForeground) BOOL foreground;
 @property (nonatomic, assign, getter = isTracking) BOOL tracking;
-@property (nonatomic, assign) BOOL analyzeAutoLayout;
 @property (nonatomic, assign) BOOL enableAlert;
-@property (nonatomic, copy) DFTDebugScreenshotCompletionBlock completionBlock;
+@property (nonatomic) NSMutableArray *adapters;
 
 + (instancetype)sharedInstance;
 
@@ -39,8 +39,8 @@
     if (self) {
         self.foreground = YES;
         self.tracking = NO;
-        self.analyzeAutoLayout = NO;
         self.enableAlert = YES;
+        self.adapters = [@[] mutableCopy];
     }
     return self;
 }
@@ -86,14 +86,6 @@
     }
 }
 
-+ (BOOL)getAnalyzeAutoLayout {
-    return [DFTDebugScreenshot sharedInstance].analyzeAutoLayout;
-}
-
-+ (void)setAnalyzeAutoLayout:(BOOL)value {
-    [DFTDebugScreenshot sharedInstance].analyzeAutoLayout = value;
-}
-
 + (BOOL)getEnableAlert {
     return [DFTDebugScreenshot sharedInstance].enableAlert;
 }
@@ -102,10 +94,12 @@
     [DFTDebugScreenshot sharedInstance].enableAlert = value;
 }
 
-+ (void)completionBlock:(DFTDebugScreenshotCompletionBlock)block {
-    if (block) {
-        [DFTDebugScreenshot sharedInstance].completionBlock = block;
-    }
++ (NSArray *)getAdapters {
+    return [NSArray arrayWithArray:[DFTDebugScreenshot sharedInstance].adapters];
+}
+
++ (void)addAdapter:(DFTDebugScreenshotAdapter *)adapater {
+    [[DFTDebugScreenshot sharedInstance].adapters addObject:adapater];
 }
 
 + (void)capture {
@@ -114,7 +108,11 @@
     [instance process:screenshot];
 }
 
-+ (id)unarchiveObjectWithHex:(NSString *)hex {
++ (id)archiveWithObject:(id)object {
+    return [[NSKeyedArchiver archivedDataWithRootObject:object] description];
+}
+
++ (id)unarchiveWithObjectHex:(NSString *)hex {
     hex = [hex lowercaseString];
     NSMutableData *data = [NSMutableData new];
     unsigned char whole_byte;
@@ -204,8 +202,10 @@
     if (!self.isForeground) return;
 
     UIViewController *controller = [self visibledViewController];
-    DFTDebugScreenshotAdapter *adapter = [DFTDebugScreenshotDebugImageAdapter new];
-    [adapter process:controller screenshot:screenshot];
+    NSArray *adapters = [self.adapters count] > 0 ? self.adapters : @[ [DFTDebugScreenshotDebugImageAdapter new] ];
+    for (DFTDebugScreenshotAdapter *adapter in adapters) {
+        [adapter process:controller screenshot:screenshot];
+    }
 }
 
 - (UIViewController *)visibledViewController {

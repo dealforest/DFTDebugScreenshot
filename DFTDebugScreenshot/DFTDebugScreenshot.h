@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^DFTDebugScreenshotCompletionBlock)(UIViewController *, UIImage *, id, UIImage *);
+@class DFTDebugScreenshotAdapter;
 
-@interface UIViewController (DFTDebugScreenshotAdditions)
+@interface UIViewController(DFTDebugScreenshotAdditions)
 
 - (id)dft_debugObjectForDebugScreenshot;
 
@@ -22,18 +22,30 @@ typedef void (^DFTDebugScreenshotCompletionBlock)(UIViewController *, UIImage *,
 
 + (void)setTraking:(BOOL)value;
 
-+ (BOOL)getAnalyzeAutoLayout;
-
-+ (void)setAnalyzeAutoLayout:(BOOL)value;
-
 + (BOOL)getEnableAlert;
 
 + (void)setEnableAlert:(BOOL)value;
 
-+ (void)completionBlock:(DFTDebugScreenshotCompletionBlock)block;
++ (NSArray *)getAdapters;
+
++ (void)addAdapter:(DFTDebugScreenshotAdapter *)adapater;
 
 + (void)capture;
 
-+ (id)unarchiveObjectWithHex:(NSString *)hex;
++ (id)unarchiveWithObjectHex:(NSString *)hex;
+
++ (id)archiveWithObject:(id)object;
+
+@end
+
+@interface DFTDebugScreenshot(DFTDebugScreenshotDeprecated)
+
++ (BOOL)getAnalyzeAutoLayout __deprecated_msg("Method deprecated.");
+
++ (void)setAnalyzeAutoLayout:(BOOL)value __deprecated_msg("Method deprecated.");
+
++ (void)completionBlock:(void (^)(UIViewController *, UIImage *, id, UIImage *))block __deprecated_msg("Method deprecated.");
+
++ (id)unarchiveObjectWithHex:(NSString *)hex __deprecated_msg("Method deprecated. Use `unarchiveWithObjectHex:`");
 
 @end
