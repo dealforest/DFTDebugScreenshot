@@ -204,7 +204,7 @@
     UIViewController *controller = [self visibledViewController];
     NSArray *adapters = [self.adapters count] > 0 ? self.adapters : @[ [DFTDebugScreenshotDebugImageAdapter new] ];
     for (DFTDebugScreenshotAdapter *adapter in adapters) {
-        [adapter process:controller screenshot:screenshot];
+        [adapter processWithController:controller screenshot:screenshot];
     }
 }
 

@@ -30,12 +30,12 @@
     _iconURL = iconURL;
 }
 
-- (void)process:(UIViewController *)controller screenshot:(UIImage *)screenshot {
-    id debugObject = [self inquiryDebugObject:controller];
+- (void)processWithController:(UIViewController *)controller screenshot:(UIImage *)screenshot {
+    id debugObject = [self inquiryDebugObjectOfController:controller];
     NSMutableDictionary *payload = [self createDefaultPayload];
     NSMutableArray *attachments = [payload[@"attachments"] mutableCopy];
     [attachments addObject:[self createAttachmentWithTitle:@"VIEW HIERARCHY"
-                                                      text:[self inquiryViewHierarhy:controller]
+                                                      text:[self inquiryViewHierarhyOfController:controller]
                                                      value:NSStringFromClass([controller class])]];
     [attachments addObject:[self createAttachmentWithTitle:@"DEBUG OBJECT"
                                                       text:[debugObject description]]];
