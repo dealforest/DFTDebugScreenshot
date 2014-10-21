@@ -76,22 +76,22 @@
                                                   @"fields": @[
                                                           @{
                                                               @"title": @"NAME",
-                                                              @"value": info[@"CFBundleName"],
+                                                              @"value": [self appName],
                                                               @"short": @YES,
                                                               },
                                                           @{
                                                               @"title": @"BUNDLE IDENTIFIER",
-                                                              @"value": info[@"CFBundleIdentifier"],
+                                                              @"value": [self appBundleIdentifier],
                                                               @"short": @YES,
                                                               },
                                                           @{
                                                               @"title": @"VERSION",
-                                                              @"value": info[@"CFBundleShortVersionString"],
+                                                              @"value": [self appVersion],
                                                               @"short": @YES,
                                                               },
                                                           @{
                                                               @"title": @"BUILD",
-                                                              @"value": info[@"CFBundleVersion"],
+                                                              @"value": [self appBuildlVersion],
                                                               @"short": @YES,
                                                               },
                                                           @{

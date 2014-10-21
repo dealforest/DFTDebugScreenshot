@@ -54,6 +54,22 @@
     return formatter;
 }
 
+- (NSString *)appName {
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
+}
+
+- (NSString *)appVersion {
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+}
+
+- (NSString *)appBundleIdentifier {
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleIdentifier"];
+}
+
+- (NSString *)appBuildlVersion {
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+}
+
 - (NSString *)freeRAM {
     vm_statistics_data_t vm_stats;
     mach_msg_type_number_t info_count = HOST_VM_INFO_COUNT;

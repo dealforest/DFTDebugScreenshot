@@ -22,6 +22,14 @@
 
 - (NSDateFormatter *)defaultDateFormatter;
 
+- (NSString *)appName;
+
+- (NSString *)appVersion;
+
+- (NSString *)appBundleIdentifier;
+
+- (NSString *)appBuildlVersion;
+
 - (NSString *)freeRAM;
 
 - (NSString *)freeSpace;
