@@ -86,9 +86,11 @@
     picker.mailComposeDelegate = (id<MFMailComposeViewControllerDelegate>)self;
     [picker setToRecipients:self.toRecipients];
     [picker setSubject:self.subject];
-    [picker addAttachmentData:UIImageJPEGRepresentation(screenshot, 1)
-                     mimeType:@"image/jpeg"
-                     fileName:@"screenshot.jpg"];
+    if (screenshot) {
+        [picker addAttachmentData:UIImageJPEGRepresentation(screenshot, 1)
+                         mimeType:@"image/jpeg"
+                         fileName:@"screenshot.jpg"];
+    }
     [picker setMessageBody:[body componentsJoinedByString:@"\n"] isHTML:NO];
 
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:picker animated:YES completion:nil];
