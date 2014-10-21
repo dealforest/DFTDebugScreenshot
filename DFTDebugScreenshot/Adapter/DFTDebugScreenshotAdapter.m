@@ -6,16 +6,15 @@
 //
 //
 
-#import "DFTDebugScreenshotAdapter.h"
-
 #import <mach/mach.h>
 #import <mach/mach_host.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#import "DFTDebugScreenshotAdapter.h"
 
 @implementation DFTDebugScreenshotAdapter
 
-- (NSString *)inquiryViewHierarhy:(UIViewController *)controller {
+- (NSString *)inquiryViewHierarhyOfController:(UIViewController *)controller {
     NSString * (^inquiry)(UIView *, NSUInteger);
     __block __weak NSString * (^weakInquiry)(UIView *, NSUInteger) = inquiry = ^(UIView *view, NSUInteger depth) {
         NSMutableString *string = [@"" mutableCopy];
@@ -35,7 +34,7 @@
     return inquiry(controller.view, 0);
 }
 
-- (id)inquiryDebugObject:(UIViewController *)controller {
+- (id)inquiryDebugObjectOfController:(UIViewController *)controller {
     if ([controller respondsToSelector:@selector(dft_debugObjectForDebugScreenshot)]) {
         return [controller performSelector:@selector(dft_debugObjectForDebugScreenshot)];
     }
@@ -52,6 +51,22 @@
     [formatter setTimeZone:[NSTimeZone systemTimeZone]];
     [formatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]];
     return formatter;
+}
+
+- (NSString *)appName {
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
+}
+
+- (NSString *)appVersion {
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+}
+
+- (NSString *)appBundleIdentifier {
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleIdentifier"];
+}
+
+- (NSString *)appBuildlVersion {
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
 }
 
 - (NSString *)freeRAM {

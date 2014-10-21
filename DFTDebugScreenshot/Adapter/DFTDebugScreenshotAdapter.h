@@ -10,18 +10,25 @@
 
 @protocol DFTDebugScreenshotAdapterProtocol
 
-- (void)process:(UIViewController *)controller screenshot:(UIImage *)screenshot;
+- (void)processWithController:(UIViewController *)controller screenshot:(UIImage *)screenshot;
 
 @end
 
-
 @interface DFTDebugScreenshotAdapter : NSObject<DFTDebugScreenshotAdapterProtocol>
 
-- (NSString *)inquiryViewHierarhy:(UIViewController *)controller;
+- (NSString *)inquiryViewHierarhyOfController:(UIViewController *)controller;
 
-- (id)inquiryDebugObject:(UIViewController *)controller;
+- (id)inquiryDebugObjectOfController:(UIViewController *)controller;
 
 - (NSDateFormatter *)defaultDateFormatter;
+
+- (NSString *)appName;
+
+- (NSString *)appVersion;
+
+- (NSString *)appBundleIdentifier;
+
+- (NSString *)appBuildlVersion;
 
 - (NSString *)freeRAM;
 

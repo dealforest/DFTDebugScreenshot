@@ -6,21 +6,24 @@
 //
 //
 
-#import "DFTDebugScreenshotDebugImageAdapter.h"
-#import "DFTDebugScreenshotHelper.h"
-#import "DFTDebugScreenshotView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+#import "DFTDebugScreenshotDebugImageAdapter.h"
+#import "DFTDebugScreenshotHelper.h"
+#import "DFTDebugScreenshotView.h"
 
 static float const kCompressionQuality = 0.7;
 
 @implementation DFTDebugScreenshotDebugImageAdapter
 
-- (void)process:(UIViewController *)controller screenshot:(UIImage *)screenshot {
+#pragma mark -
+#pragma mark DFTDebugScreenshotAdapterProtocol
+
+- (void)processWithController:(UIViewController *)controller screenshot:(UIImage *)screenshot {
     if (![DFTDebugScreenshotHelper isEnablePhotosAccess]) return;
 
-    id debugObject = [self inquiryDebugObject:controller];
+    id debugObject = [self inquiryDebugObjectOfController:controller];
 
     NSArray *views = [[DFTDebugScreenshotHelper bundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
     DFTDebugScreenshotView *debugView = [views firstObject];
@@ -30,7 +33,7 @@ static float const kCompressionQuality = 0.7;
                                [debugObject description],
                                @"",
                                @"[VIEW HIERARCHY]",
-                               [self inquiryViewHierarhy:controller],
+                               [self inquiryViewHierarhyOfController:controller],
                                ] componentsJoinedByString:@"\n"]];
 
     UIImage *image = [debugView convertToImage];

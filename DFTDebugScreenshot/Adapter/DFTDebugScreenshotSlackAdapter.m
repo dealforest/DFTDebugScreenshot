@@ -14,6 +14,9 @@
 
 @implementation DFTDebugScreenshotSlackAdapter
 
+#pragma mark -
+#pragma mark initializer
+
 - (instancetype)initWithIncomingWebHookURL:(NSURL *)requestURL {
     self = [super init];
     if (self) {
@@ -25,17 +28,23 @@
     return self;
 }
 
+#pragma mark -
+#pragma mark accessor
+
 - (void)setIconURL:(NSURL *)iconURL {
     _iconEmoji = iconURL ? nil : DEFAULT_ICON_EMOJI;
     _iconURL = iconURL;
 }
 
-- (void)process:(UIViewController *)controller screenshot:(UIImage *)screenshot {
-    id debugObject = [self inquiryDebugObject:controller];
+#pragma mark -
+#pragma mark DFTDebugScreenshotAdapterProtocol
+
+- (void)processWithController:(UIViewController *)controller screenshot:(UIImage *)screenshot {
+    id debugObject = [self inquiryDebugObjectOfController:controller];
     NSMutableDictionary *payload = [self createDefaultPayload];
     NSMutableArray *attachments = [payload[@"attachments"] mutableCopy];
     [attachments addObject:[self createAttachmentWithTitle:@"VIEW HIERARCHY"
-                                                      text:[self inquiryViewHierarhy:controller]
+                                                      text:[self inquiryViewHierarhyOfController:controller]
                                                      value:NSStringFromClass([controller class])]];
     [attachments addObject:[self createAttachmentWithTitle:@"DEBUG OBJECT"
                                                       text:[debugObject description]]];
@@ -76,22 +85,22 @@
                                                   @"fields": @[
                                                           @{
                                                               @"title": @"NAME",
-                                                              @"value": info[@"CFBundleName"],
+                                                              @"value": [self appName],
                                                               @"short": @YES,
                                                               },
                                                           @{
                                                               @"title": @"BUNDLE IDENTIFIER",
-                                                              @"value": info[@"CFBundleIdentifier"],
+                                                              @"value": [self appBundleIdentifier],
                                                               @"short": @YES,
                                                               },
                                                           @{
                                                               @"title": @"VERSION",
-                                                              @"value": info[@"CFBundleShortVersionString"],
+                                                              @"value": [self appVersion],
                                                               @"short": @YES,
                                                               },
                                                           @{
                                                               @"title": @"BUILD",
-                                                              @"value": info[@"CFBundleVersion"],
+                                                              @"value": [self appBuildlVersion],
                                                               @"short": @YES,
                                                               },
                                                           @{

@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Toshihiro Morimoto. All rights reserved.
 //
 
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "DFTDebugScreenshot.h"
 #import "DFTDebugScreenshotHelper.h"
 #import "DFTDebugScreenshotAdapter.h"
 #import "DFTDebugScreenshotDebugImageAdapter.h"
-#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface DFTDebugScreenshot()
 
@@ -204,7 +204,7 @@
     UIViewController *controller = [self visibledViewController];
     NSArray *adapters = [self.adapters count] > 0 ? self.adapters : @[ [DFTDebugScreenshotDebugImageAdapter new] ];
     for (DFTDebugScreenshotAdapter *adapter in adapters) {
-        [adapter process:controller screenshot:screenshot];
+        [adapter processWithController:controller screenshot:screenshot];
     }
 }
 
