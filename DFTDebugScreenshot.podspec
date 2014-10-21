@@ -13,7 +13,7 @@ Pod::Spec.new do |spec|
       'DFTDebugScreenshot/Localization/*.lproj',
     ]
   }
-  spec.framework       = [ 'AssetsLibrary', 'ImageIO', 'MobileCoreServices' ]
+  spec.framework       = [ 'AssetsLibrary', 'ImageIO', 'MobileCoreServices', 'MessageUI' ]
   spec.requires_arc    = true
   spec.license         = {
     :type => 'MIT',
