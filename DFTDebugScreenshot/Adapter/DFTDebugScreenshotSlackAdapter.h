@@ -6,7 +6,6 @@
 //
 //
 
-#import <UIKit/UIKit.h>
 #import "DFTDebugScreenshotAdapter.h"
 
 @interface DFTDebugScreenshotSlackAdapter : DFTDebugScreenshotAdapter

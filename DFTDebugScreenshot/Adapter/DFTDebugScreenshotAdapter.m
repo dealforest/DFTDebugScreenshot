@@ -6,12 +6,11 @@
 //
 //
 
-#import "DFTDebugScreenshotAdapter.h"
-
 #import <mach/mach.h>
 #import <mach/mach_host.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#import "DFTDebugScreenshotAdapter.h"
 
 @implementation DFTDebugScreenshotAdapter
 

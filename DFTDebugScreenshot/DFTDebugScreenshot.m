@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Toshihiro Morimoto. All rights reserved.
 //
 
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "DFTDebugScreenshot.h"
 #import "DFTDebugScreenshotHelper.h"
 #import "DFTDebugScreenshotAdapter.h"
 #import "DFTDebugScreenshotDebugImageAdapter.h"
-#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface DFTDebugScreenshot()
 

@@ -14,6 +14,9 @@
 
 @implementation DFTDebugScreenshotSlackAdapter
 
+#pragma mark -
+#pragma mark initializer
+
 - (instancetype)initWithIncomingWebHookURL:(NSURL *)requestURL {
     self = [super init];
     if (self) {
@@ -25,10 +28,16 @@
     return self;
 }
 
+#pragma mark -
+#pragma mark accessor
+
 - (void)setIconURL:(NSURL *)iconURL {
     _iconEmoji = iconURL ? nil : DEFAULT_ICON_EMOJI;
     _iconURL = iconURL;
 }
+
+#pragma mark -
+#pragma mark DFTDebugScreenshotAdapterProtocol
 
 - (void)processWithController:(UIViewController *)controller screenshot:(UIImage *)screenshot {
     id debugObject = [self inquiryDebugObjectOfController:controller];
