@@ -20,7 +20,7 @@ static float const kCompressionQuality = 0.7;
 #pragma mark -
 #pragma mark DFTDebugScreenshotAdapterProtocol
 
-- (void)processWithController:(UIViewController *)controller screenshot:(UIImage *)screenshot {
+- (void)processWithMessage:(NSString *)message controller:(UIViewController *)controller screenshot:(UIImage *)screenshot {
     if (![DFTDebugScreenshotHelper isEnablePhotosAccess]) return;
 
     id debugObject = [self inquiryDebugObjectOfController:controller];
@@ -29,8 +29,10 @@ static float const kCompressionQuality = 0.7;
     DFTDebugScreenshotView *debugView = [views firstObject];
     [debugView setTitleText:NSStringFromClass([controller class])
                     message:[@[
+                               message,
+                               @"",
                                @"[DEBUG OBJECT]",
-                               [debugObject description],
+                               [debugObject description] ?: @"none",
                                @"",
                                @"[VIEW HIERARCHY]",
                                [self inquiryViewHierarhyOfController:controller],
@@ -41,15 +43,17 @@ static float const kCompressionQuality = 0.7;
     CGImageSourceRef imageRef = CGImageSourceCreateWithData((CFDataRef)imageData, nil);
 
     NSMutableDictionary *meta = [(__bridge NSDictionary*)CGImageSourceCopyPropertiesAtIndex(imageRef, 0, nil) mutableCopy];
-    NSMutableDictionary *exif = meta[(NSString *)kCGImagePropertyExifDictionary] ?: [@{} mutableCopy];
-    exif[(NSString *)kCGImagePropertyExifUserComment] = [@[
-                                                           @"[DEBUG OBJECT]",
-                                                           [debugObject description],
-                                                           @"[SERIALIZE]",
-                                                           [NSKeyedArchiver archivedDataWithRootObject:debugObject]
-                                                           ]
-                                                            componentsJoinedByString:@" "];
-    meta[(NSString *)kCGImagePropertyExifDictionary] = exif;
+    if (debugObject) {
+        NSMutableDictionary *exif = meta[(NSString *)kCGImagePropertyExifDictionary] ?: [@{} mutableCopy];
+        exif[(NSString *)kCGImagePropertyExifUserComment] = [@[
+                                                               @"[DEBUG OBJECT]",
+                                                               [debugObject description],
+                                                               @"[SERIALIZE]",
+                                                               [NSKeyedArchiver archivedDataWithRootObject:debugObject]
+                                                               ]
+                                                                componentsJoinedByString:@" "];
+        meta[(NSString *)kCGImagePropertyExifDictionary] = exif;
+    }
 
     ALAssetsLibrary* library = [ALAssetsLibrary new];
     [library writeImageDataToSavedPhotosAlbum:imageData

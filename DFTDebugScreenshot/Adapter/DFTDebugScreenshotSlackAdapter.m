@@ -21,7 +21,7 @@
     self = [super init];
     if (self) {
         _requestURL = requestURL;
-        _text = [NSString stringWithFormat:@"captured_at %@ via DFTDebugScreenshot v0.1.0", [[self defaultDateFormatter] stringFromDate:[NSDate date]]];
+        _text = @"";
         _username = @"screenshot-bot";
         _iconEmoji = DEFAULT_ICON_EMOJI;
     }
@@ -39,17 +39,21 @@
 #pragma mark -
 #pragma mark DFTDebugScreenshotAdapterProtocol
 
-- (void)processWithController:(UIViewController *)controller screenshot:(UIImage *)screenshot {
-    id debugObject = [self inquiryDebugObjectOfController:controller];
+- (void)processWithMessage:(NSString *)message controller:(UIViewController *)controller screenshot:(UIImage *)screenshot {
     NSMutableDictionary *payload = [self createDefaultPayload];
+    payload[@"text"] = payload[@"text"] ? [message stringByAppendingFormat:@"\n%@", payload[@"text"]] : message;
+
     NSMutableArray *attachments = [payload[@"attachments"] mutableCopy];
     [attachments addObject:[self createAttachmentWithTitle:@"VIEW HIERARCHY"
                                                       text:[self inquiryViewHierarhyOfController:controller]
                                                      value:NSStringFromClass([controller class])]];
-    [attachments addObject:[self createAttachmentWithTitle:@"DEBUG OBJECT"
-                                                      text:[debugObject description]]];
-    [attachments addObject:[self createAttachmentWithTitle:@"SERIALIZE"
-                                                      text:[DFTDebugScreenshot archiveWithObject:debugObject]]];
+    id debugObject = [self inquiryDebugObjectOfController:controller];
+    if (debugObject) {
+        [attachments addObject:[self createAttachmentWithTitle:@"DEBUG OBJECT"
+                                                          text:[debugObject description]]];
+        [attachments addObject:[self createAttachmentWithTitle:@"SERIALIZE"
+                                                          text:[DFTDebugScreenshot archiveWithObject:debugObject]]];
+    }
     payload[@"attachments"] = attachments;
 
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -161,7 +165,7 @@
              @"fields": @[
                      @{
                          @"title": title,
-                         @"value": value,
+                         @"value": value ?: @"",
                          @"short": @YES,
                          }
                      ]
