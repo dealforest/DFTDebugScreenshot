@@ -31,7 +31,8 @@
         }
         return [NSString stringWithString:string];
     };
-    return inquiry(controller.view, 0);
+    NSString *hierarchy = inquiry(controller.view, 0);
+    return hierarchy.length > 0 ? hierarchy : @"unknown";
 }
 
 - (id)inquiryDebugObjectOfController:(UIViewController *)controller {

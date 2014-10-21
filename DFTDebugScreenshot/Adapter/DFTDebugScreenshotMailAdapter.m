@@ -42,28 +42,21 @@
 }
 
 - (NSString *)messageBody {
-    return _messageBody ?: [NSString stringWithFormat:@"captured_at %@ via DFTDebugScreenshot v0.1.0", [[self defaultDateFormatter] stringFromDate:[NSDate date]]];
+    return _messageBody ?: @"";
 }
 
 #pragma mark -
 #pragma mark DFTDebugScreenshotAdapterProtocol
 
-- (void)processWithController:(UIViewController *)controller screenshot:(UIImage *)screenshot {
+- (void)processWithMessage:(NSString *)message controller:(UIViewController *)controller screenshot:(UIImage *)screenshot {
     if (![MFMailComposeViewController canSendMail]) {
-        NSLog(@"%@", @"You need settings for Mail.");
+        NSLog(@"You need settings for Mail.");
         return;
     }
 
-    id debugObject = [self inquiryDebugObjectOfController:controller];
-    MFMailComposeViewController *picker = [MFMailComposeViewController new];
-    picker.mailComposeDelegate = (id<MFMailComposeViewControllerDelegate>)self;
-    [picker setToRecipients:self.toRecipients];
-    [picker setSubject:self.subject];
-    [picker addAttachmentData:UIImageJPEGRepresentation(screenshot, 1)
-                     mimeType:@"image/jpeg"
-                     fileName:@"screenshot.jpg"];
-    [picker setMessageBody:[@[
-                              self.messageBody,
+    NSString *messageBody = self.messageBody ? [message stringByAppendingFormat:@"\n%@", self.messageBody] : message;
+    NSMutableArray *body = [@[
+                              messageBody,
                               @"\n---------------------\n",
                               [NSString stringWithFormat:@"NAME: %@", [self appName]],
                               [NSString stringWithFormat:@"BUNDLE IDENTIFIER: %@", [self appBundleIdentifier]],
@@ -74,14 +67,29 @@
                               [NSString stringWithFormat:@"FREE RAM: %@", [self freeRAM]],
                               [NSString stringWithFormat:@"FREE SPACE: %@", [self freeSpace]],
                               @"\n---------------------\n",
-                              @"[DEBUG OBJECT]",
-                              [debugObject description],
-                              @"[SERIALIZE]",
-                              [DFTDebugScreenshot archiveWithObject:debugObject],
-                              @"[VIEW HIERARCHY]",
-                              [self inquiryViewHierarhyOfController:controller],
-                              ] componentsJoinedByString:@"\n"]
-                    isHTML:NO];
+                              ] mutableCopy];
+    id debugObject = [self inquiryDebugObjectOfController:controller];
+    if (debugObject) {
+        [body addObjectsFromArray:@[
+                                    @"[DEBUG OBJECT]",
+                                    [debugObject description],
+                                    @"[SERIALIZE]",
+                                    [DFTDebugScreenshot archiveWithObject:debugObject],
+                                    ]];
+    }
+    [body addObjectsFromArray:@[
+                                @"[VIEW HIERARCHY]",
+                                [self inquiryViewHierarhyOfController:controller]
+                                ]];
+
+    MFMailComposeViewController *picker = [MFMailComposeViewController new];
+    picker.mailComposeDelegate = (id<MFMailComposeViewControllerDelegate>)self;
+    [picker setToRecipients:self.toRecipients];
+    [picker setSubject:self.subject];
+    [picker addAttachmentData:UIImageJPEGRepresentation(screenshot, 1)
+                     mimeType:@"image/jpeg"
+                     fileName:@"screenshot.jpg"];
+    [picker setMessageBody:[body componentsJoinedByString:@"\n"] isHTML:NO];
 
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:picker animated:YES completion:nil];
 }

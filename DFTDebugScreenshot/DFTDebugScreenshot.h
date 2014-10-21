@@ -32,6 +32,10 @@
 
 + (void)capture;
 
++ (void)captureWithError:(NSError *)error;
+
++ (void)captureWithException:(NSException *)exception;
+
 + (id)unarchiveWithObjectHex:(NSString *)hex;
 
 + (id)archiveWithObject:(id)object;

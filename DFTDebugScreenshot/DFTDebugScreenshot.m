@@ -105,7 +105,22 @@
 + (void)capture {
     DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
     UIImage *screenshot = [instance captureCurrentScreen];
-    [instance process:screenshot];
+    NSString *message = [[instance callerString] stringByAppendingString:@"manual capture"];
+    [instance processWithMessage:message screenshot:screenshot];
+}
+
++ (void)captureWithError:(NSError *)error {
+    DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
+    UIImage *screenshot = [instance captureCurrentScreen];
+    NSString *message = [[instance callerString] stringByAppendingString:[error description]];
+    [instance processWithMessage:message screenshot:screenshot];
+}
+
++ (void)captureWithException:(NSException *)exception {
+    DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
+    UIImage *screenshot = [instance captureCurrentScreen];
+    NSString *message = [[instance callerString] stringByAppendingString:[exception description]];
+    [instance processWithMessage:message screenshot:screenshot];
 }
 
 + (id)archiveWithObject:(id)object {
@@ -136,7 +151,7 @@
 
 - (void)handlingUserDidTakeScreenshotNotification:(NSNotification *)notification {
     UIImage *screenshot = [self loadScreenshot] ?: [self captureCurrentScreen];
-    [self process:screenshot];
+    [self processWithMessage:@"screenshot" screenshot:screenshot];
 }
 
 - (void)handlingWillResignActiveNotification:(NSNotification *)notification {
@@ -198,13 +213,13 @@
 #pragma mark -
 #pragma mark private
 
-- (void)process:(UIImage *)screenshot {
+- (void)processWithMessage:(NSString *)message screenshot:(UIImage *)screenshot {
     if (!self.isForeground) return;
 
     UIViewController *controller = [self visibledViewController];
     NSArray *adapters = [self.adapters count] > 0 ? self.adapters : @[ [DFTDebugScreenshotDebugImageAdapter new] ];
     for (DFTDebugScreenshotAdapter *adapter in adapters) {
-        [adapter processWithController:controller screenshot:screenshot];
+        [adapter processWithMessage:message controller:controller screenshot:screenshot];
     }
 }
 
@@ -231,6 +246,14 @@
     UIGraphicsEndImageContext();
 
     return screenshot;
+}
+
+- (NSString *)callerString {
+    NSString *callerString = [[NSThread callStackSymbols] objectAtIndex:2];
+    NSCharacterSet *separators = [NSCharacterSet characterSetWithCharactersInString:@" +?.,"];
+    NSMutableArray *caller = [NSMutableArray arrayWithArray:[callerString componentsSeparatedByCharactersInSet:separators]];
+    [caller removeObject:@""];
+    return [NSString stringWithFormat:@"%@ %@ L%@\n", caller[3], caller[4], caller[5]];
 }
 
 @end

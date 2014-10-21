@@ -10,7 +10,7 @@
 
 @protocol DFTDebugScreenshotAdapterProtocol
 
-- (void)processWithController:(UIViewController *)controller screenshot:(UIImage *)screenshot;
+- (void)processWithMessage:(NSString *)message controller:(UIViewController *)controller screenshot:(UIImage *)screenshot;
 
 @end
 
