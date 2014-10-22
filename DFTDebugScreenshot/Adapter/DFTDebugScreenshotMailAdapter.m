@@ -14,6 +14,12 @@
 #pragma mark -
 #pragma mark initializer
 
+@interface DFTDebugScreenshotMailAdapter()
+
+@property UIViewController *viewController;
+
+@end
+
 @implementation DFTDebugScreenshotMailAdapter
 
 - (instancetype)initWithToRecipients:(NSArray *)toRecipients {
@@ -93,14 +99,16 @@
     }
     [picker setMessageBody:[body componentsJoinedByString:@"\n"] isHTML:NO];
 
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:picker animated:YES completion:nil];
+    self.viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    [self.viewController presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark -
 #pragma mark MFMailComposeViewControllerDelegate
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.viewController dismissViewControllerAnimated:YES completion:nil];
+    self.viewController = nil;
 }
 
 
