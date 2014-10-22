@@ -104,23 +104,26 @@
 
 + (void)capture {
     DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
+    UIViewController *controller = [instance visibledViewController];
     UIImage *screenshot = [instance captureCurrentScreen];
     NSString *message = [[instance callerString] stringByAppendingString:@"manual capture"];
-    [instance processWithMessage:message screenshot:screenshot];
+    [instance processWithMessage:message controller:controller screenshot:screenshot];
 }
 
 + (void)captureWithError:(NSError *)error {
     DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
+    UIViewController *controller = [instance visibledViewController];
     UIImage *screenshot = [instance captureCurrentScreen];
     NSString *message = [[instance callerString] stringByAppendingString:[error description]];
-    [instance processWithMessage:message screenshot:screenshot];
+    [instance processWithMessage:message controller:controller screenshot:screenshot];
 }
 
 + (void)captureWithException:(NSException *)exception {
     DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
+    UIViewController *controller = [instance visibledViewController];
     UIImage *screenshot = [instance captureCurrentScreen];
     NSString *message = [[instance callerString] stringByAppendingString:[exception description]];
-    [instance processWithMessage:message screenshot:screenshot];
+    [instance processWithMessage:message controller:controller screenshot:screenshot];
 }
 
 + (id)archiveWithObject:(id)object {
@@ -150,8 +153,9 @@
 #pragma mark observer
 
 - (void)handlingUserDidTakeScreenshotNotification:(NSNotification *)notification {
+    UIViewController *controller = [self visibledViewController];
     UIImage *screenshot = [self loadScreenshot] ?: [self captureCurrentScreen];
-    [self processWithMessage:@"screenshot" screenshot:screenshot];
+    [self processWithMessage:@"screenshot" controller:controller screenshot:screenshot];
 }
 
 - (void)handlingWillResignActiveNotification:(NSNotification *)notification {
@@ -213,10 +217,9 @@
 #pragma mark -
 #pragma mark private
 
-- (void)processWithMessage:(NSString *)message screenshot:(UIImage *)screenshot {
+- (void)processWithMessage:(NSString *)message controller:(id)controller screenshot:(UIImage *)screenshot {
     if (!self.isForeground) return;
 
-    UIViewController *controller = [self visibledViewController];
     NSArray *adapters = [self.adapters count] > 0 ? self.adapters : @[ [DFTDebugScreenshotDebugImageAdapter new] ];
     for (DFTDebugScreenshotAdapter *adapter in adapters) {
         [adapter processWithMessage:message controller:controller screenshot:screenshot];
