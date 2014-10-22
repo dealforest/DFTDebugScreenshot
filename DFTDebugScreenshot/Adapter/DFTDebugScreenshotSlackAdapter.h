@@ -10,12 +10,12 @@
 
 @interface DFTDebugScreenshotSlackAdapter : DFTDebugScreenshotAdapter
 
-@property NSURL *requestURL;
-@property NSString *channel;
-@property NSString *username;
-@property NSString *text;
-@property NSString *iconEmoji;
-@property NSURL *iconURL;
+@property(nonatomic) NSURL *requestURL;
+@property(nonatomic) NSString *channel;
+@property(nonatomic) NSString *username;
+@property(nonatomic) NSString *text;
+@property(nonatomic) NSString *iconEmoji;
+@property(nonatomic) NSURL *iconURL;
 
 - (instancetype)initWithIncomingWebHookURL:(NSURL *)requestURL;
 

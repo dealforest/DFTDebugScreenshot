@@ -61,7 +61,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.requestURL];
     request.HTTPMethod = @"POST";
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload
-                                                       options:NSJSONReadingMutableContainers
+                                                       options:NSJSONWritingPrettyPrinted
                                                          error:nil];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
                                             completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -80,7 +80,6 @@
 #pragma mark private
 
 - (NSMutableDictionary *)createDefaultPayload {
-    NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
     NSMutableDictionary *payload = [@{
                                       @"attachments": @[
                                               @{

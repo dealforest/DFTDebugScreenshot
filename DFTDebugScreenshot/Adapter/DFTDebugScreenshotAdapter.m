@@ -12,7 +12,13 @@
 #include <sys/sysctl.h>
 #import "DFTDebugScreenshotAdapter.h"
 
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprotocol"
+
 @implementation DFTDebugScreenshotAdapter
+
+#pragma clang diagnostic pop
 
 - (NSString *)inquiryViewHierarhyOfController:(UIViewController *)controller {
     NSString * (^inquiry)(UIView *, NSUInteger);
@@ -35,6 +41,9 @@
     return hierarchy.length > 0 ? hierarchy : @"unknown";
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+
 - (id)inquiryDebugObjectOfController:(UIViewController *)controller {
     if ([controller respondsToSelector:@selector(dft_debugObjectForDebugScreenshot)]) {
         return [controller performSelector:@selector(dft_debugObjectForDebugScreenshot)];
@@ -43,6 +52,8 @@
         return nil;
     }
 }
+
+#pragma clang diagnostic pop
 
 - (NSDateFormatter *)defaultDateFormatter {
     NSDateFormatter *formatter = [NSDateFormatter new];
@@ -75,7 +86,7 @@
     mach_msg_type_number_t info_count = HOST_VM_INFO_COUNT;
     kern_return_t kern_return = host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vm_stats, &info_count);
     if (kern_return == KERN_SUCCESS) {
-        natural_t mem_free = vm_stats.free_count * vm_page_size;
+        unsigned long mem_free = vm_stats.free_count * vm_page_size;
         return [NSByteCountFormatter stringFromByteCount:mem_free countStyle:NSByteCountFormatterCountStyleMemory];
     }
     else {

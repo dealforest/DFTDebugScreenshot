@@ -136,7 +136,7 @@
     unsigned char whole_byte;
     char byte_chars[3] = { '\0','\0','\0' };
     int i = 0;
-    int length = hex.length;
+    NSUInteger length = hex.length;
     while (i < length - 1) {
         char c = [hex characterAtIndex:i++];
         if (c < '0' || (c > '9' && c < 'a') || c > 'f') continue;
