@@ -11,6 +11,7 @@
 @interface DFTDebugScreenshotContext : NSObject
 
 @property (nonatomic) UIViewController *controller;
+@property (nonatomic) NSString *userIdentifier;
 @property (nonatomic) NSString *message;
 @property (nonatomic) UIImage *screenshot;
 

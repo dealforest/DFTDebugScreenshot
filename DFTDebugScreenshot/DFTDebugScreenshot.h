@@ -32,6 +32,10 @@
 
 + (void)addAdapter:(DFTDebugScreenshotAdapter *)adapater;
 
++ (NSString *)getUserIdentifier;
+
++ (void)setUserIdentifier:(NSString *)identifier;
+
 + (void)capture;
 
 + (void)captureWithError:(NSError *)error;

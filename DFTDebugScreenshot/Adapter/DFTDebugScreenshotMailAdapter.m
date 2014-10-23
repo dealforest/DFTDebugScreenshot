@@ -70,6 +70,7 @@
                               [NSString stringWithFormat:@"BUNDLE IDENTIFIER: %@", [self appBundleIdentifier]],
                               [NSString stringWithFormat:@"VERSION: %@", [self appVersion]],
                               [NSString stringWithFormat:@"BUILD: %@", [self appBuildlVersion]],
+                              [NSString stringWithFormat:@"USER IDENTIFIER: %@", context.userIdentifier],
                               [NSString stringWithFormat:@"OPERATING SYSTEM: %@", [self operatingSystem]],
                               [NSString stringWithFormat:@"DEVICE: %@", [self device]],
                               [NSString stringWithFormat:@"FREE RAM: %@", [self freeRAM]],

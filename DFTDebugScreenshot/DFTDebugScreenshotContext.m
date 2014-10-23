@@ -13,6 +13,10 @@
 #pragma mark -
 #pragma mark accessor
 
+- (NSString *)userIdentifier {
+    return _userIdentifier ?: @"-";
+}
+
 - (NSString *)message {
     return _message ?: @"";
 }

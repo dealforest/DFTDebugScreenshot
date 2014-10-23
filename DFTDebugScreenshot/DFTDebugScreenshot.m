@@ -19,6 +19,7 @@ static BOOL isForeground = YES;
 static BOOL isTracking = NO;
 static BOOL isEnableAlert = YES;
 static NSMutableArray *adapters;
+static NSString *userIdentifier;
 
 + (void)initialize {
     isForeground = YES;
@@ -78,6 +79,14 @@ static NSMutableArray *adapters;
 
 + (void)addAdapter:(DFTDebugScreenshotAdapter *)adapater {
     [adapters addObject:adapater];
+}
+
++ (NSString *)getUserIdentifier {
+    return userIdentifier;
+}
+
++ (void)setUserIdentifier:(NSString *)identifier {
+    userIdentifier = identifier;
 }
 
 + (void)capture {

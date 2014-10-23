@@ -33,6 +33,8 @@ static float const kCompressionQuality = 0.7;
                     message:[@[
                                context.message,
                                @"",
+                               @"[USER IDENTIFIER]",
+                               context.userIdentifier,
                                @"[DEBUG OBJECT]",
                                [debugObject description] ?: @"none",
                                @"",

@@ -42,7 +42,7 @@
 
 - (void)processWithContext:(DFTDebugScreenshotContext *)context {
     UIViewController *controller = context.controller;
-    NSMutableDictionary *payload = [self createDefaultPayload];
+    NSMutableDictionary *payload = [self createDefaultPayloadWithContext:context];
     payload[@"text"] = payload[@"text"] ? [context.message stringByAppendingFormat:@"\n%@", payload[@"text"]] : context.message;
 
     NSMutableArray *attachments = [payload[@"attachments"] mutableCopy];
@@ -81,7 +81,7 @@
 #pragma mark -
 #pragma mark private
 
-- (NSMutableDictionary *)createDefaultPayload {
+- (NSMutableDictionary *)createDefaultPayloadWithContext:(DFTDebugScreenshotContext *)context {
     NSMutableDictionary *payload = [@{
                                       @"attachments": @[
                                               @{
@@ -106,6 +106,11 @@
                                                           @{
                                                               @"title": @"BUILD",
                                                               @"value": [self appBuildlVersion],
+                                                              @"short": @YES,
+                                                              },
+                                                          @{
+                                                              @"title": @"USER IDENTIFIER",
+                                                              @"value": context.userIdentifier,
                                                               @"short": @YES,
                                                               },
                                                           @{
