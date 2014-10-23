@@ -8,6 +8,7 @@
 
 #import "DFTDebugScreenshotSlackAdapter.h"
 #import "DFTDebugScreenshot.h"
+#import "DFTDebugScreenshotContext.h"
 #import "DFTDebugScreenshotHelper.h"
 
 #define DEFAULT_ICON_EMOJI @":iphone:"
@@ -39,9 +40,10 @@
 #pragma mark -
 #pragma mark DFTDebugScreenshotAdapterProtocol
 
-- (void)processWithMessage:(NSString *)message controller:(UIViewController *)controller screenshot:(UIImage *)screenshot {
+- (void)processWithContext:(DFTDebugScreenshotContext *)context {
+    UIViewController *controller = context.controller;
     NSMutableDictionary *payload = [self createDefaultPayload];
-    payload[@"text"] = payload[@"text"] ? [message stringByAppendingFormat:@"\n%@", payload[@"text"]] : message;
+    payload[@"text"] = payload[@"text"] ? [context.message stringByAppendingFormat:@"\n%@", payload[@"text"]] : context.message;
 
     NSMutableArray *attachments = [payload[@"attachments"] mutableCopy];
     [attachments addObject:[self createAttachmentWithTitle:@"VIEW HIERARCHY"

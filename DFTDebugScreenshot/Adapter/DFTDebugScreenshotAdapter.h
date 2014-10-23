@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class DFTDebugScreenshotContext;
+
 @protocol DFTDebugScreenshotAdapterProtocol
 
-- (void)processWithMessage:(NSString *)message controller:(UIViewController *)controller screenshot:(UIImage *)screenshot;
+- (void)processWithContext:(DFTDebugScreenshotContext *)context;
 
 @end
 
-@interface DFTDebugScreenshotAdapter : NSObject<DFTDebugScreenshotAdapterProtocol>
+@interface DFTDebugScreenshotAdapter : NSObject
 
 - (NSString *)inquiryViewHierarhyOfController:(UIViewController *)controller;
 

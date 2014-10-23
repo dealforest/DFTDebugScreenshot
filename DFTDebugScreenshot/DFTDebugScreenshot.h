@@ -18,6 +18,8 @@
 
 @interface DFTDebugScreenshot : NSObject
 
+- (id)init UNAVAILABLE_ATTRIBUTE;
+
 + (BOOL)isTracking;
 
 + (void)setTraking:(BOOL)value;

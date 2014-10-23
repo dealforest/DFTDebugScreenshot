@@ -13,12 +13,7 @@
 #import "DFTDebugScreenshotAdapter.h"
 
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wprotocol"
-
 @implementation DFTDebugScreenshotAdapter
-
-#pragma clang diagnostic pop
 
 - (NSString *)inquiryViewHierarhyOfController:(UIViewController *)controller {
     NSString * (^inquiry)(UIView *, NSUInteger);

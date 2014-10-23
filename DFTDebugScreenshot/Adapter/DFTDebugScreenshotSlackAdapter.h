@@ -8,7 +8,7 @@
 
 #import "DFTDebugScreenshotAdapter.h"
 
-@interface DFTDebugScreenshotSlackAdapter : DFTDebugScreenshotAdapter
+@interface DFTDebugScreenshotSlackAdapter : DFTDebugScreenshotAdapter<DFTDebugScreenshotAdapterProtocol>
 
 @property(nonatomic) NSURL *requestURL;
 @property(nonatomic) NSString *channel;

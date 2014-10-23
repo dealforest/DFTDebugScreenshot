@@ -11,6 +11,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "DFTDebugScreenshotDebugImageAdapter.h"
 #import "DFTDebugScreenshotHelper.h"
+#import "DFTDebugScreenshotContext.h"
 #import "DFTDebugScreenshotView.h"
 
 static float const kCompressionQuality = 0.7;
@@ -20,16 +21,17 @@ static float const kCompressionQuality = 0.7;
 #pragma mark -
 #pragma mark DFTDebugScreenshotAdapterProtocol
 
-- (void)processWithMessage:(NSString *)message controller:(UIViewController *)controller screenshot:(UIImage *)screenshot {
+- (void)processWithContext:(DFTDebugScreenshotContext *)context {
     if (![DFTDebugScreenshotHelper isEnablePhotosAccess]) return;
 
+    UIViewController *controller = context.controller;
     id debugObject = [self inquiryDebugObjectOfController:controller];
 
     NSArray *views = [[DFTDebugScreenshotHelper bundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
     DFTDebugScreenshotView *debugView = [views firstObject];
     [debugView setTitleText:NSStringFromClass([controller class])
                     message:[@[
-                               message,
+                               context.message,
                                @"",
                                @"[DEBUG OBJECT]",
                                [debugObject description] ?: @"none",
@@ -51,7 +53,7 @@ static float const kCompressionQuality = 0.7;
                                                                @"[SERIALIZE]",
                                                                [NSKeyedArchiver archivedDataWithRootObject:debugObject]
                                                                ]
-                                                                componentsJoinedByString:@" "];
+                                                             componentsJoinedByString:@" "];
         meta[(NSString *)kCGImagePropertyExifDictionary] = exif;
     }
 
@@ -63,7 +65,6 @@ static float const kCompressionQuality = 0.7;
                                   NSString *key = status == ALAuthorizationStatusDenied ? @"DENY_RESTRINCTIONS" : @"SAVED_PHOTO";
                                   [DFTDebugScreenshotHelper showAlertWithLocalizedKey:key];
                               }];
-
 }
 
 @end

@@ -8,6 +8,6 @@
 
 #import "DFTDebugScreenshotAdapter.h"
 
-@interface DFTDebugScreenshotDebugImageAdapter : DFTDebugScreenshotAdapter
+@interface DFTDebugScreenshotDebugImageAdapter : DFTDebugScreenshotAdapter<DFTDebugScreenshotAdapterProtocol>
 
 @end
