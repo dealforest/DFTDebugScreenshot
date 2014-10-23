@@ -18,6 +18,8 @@
 
 @interface DFTDebugScreenshot : NSObject
 
+- (id)init UNAVAILABLE_ATTRIBUTE;
+
 + (BOOL)isTracking;
 
 + (void)setTraking:(BOOL)value;
@@ -29,6 +31,10 @@
 + (NSArray *)getAdapters;
 
 + (void)addAdapter:(DFTDebugScreenshotAdapter *)adapater;
+
++ (NSString *)getUserIdentifier;
+
++ (void)setUserIdentifier:(NSString *)identifier;
 
 + (void)capture;
 

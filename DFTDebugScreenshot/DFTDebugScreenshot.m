@@ -9,121 +9,108 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "DFTDebugScreenshot.h"
 #import "DFTDebugScreenshotHelper.h"
+#import "DFTDebugScreenshotContext.h"
 #import "DFTDebugScreenshotAdapter.h"
 #import "DFTDebugScreenshotDebugImageAdapter.h"
 
-@interface DFTDebugScreenshot()
-
-@property (nonatomic, assign, getter = isForeground) BOOL foreground;
-@property (nonatomic, assign, getter = isTracking) BOOL tracking;
-@property (nonatomic, assign) BOOL enableAlert;
-@property (nonatomic) NSMutableArray *adapters;
-
-+ (instancetype)sharedInstance;
-
-@end
-
 @implementation DFTDebugScreenshot
 
-+ (instancetype)sharedInstance {
-    static DFTDebugScreenshot *instance;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        instance = [DFTDebugScreenshot new];
-    });
-    return instance;
-}
+static BOOL isForeground = YES;
+static BOOL isTracking = NO;
+static BOOL isEnableAlert = YES;
+static NSMutableArray *adapters;
+static NSString *userIdentifier;
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.foreground = YES;
-        self.tracking = NO;
-        self.enableAlert = YES;
-        self.adapters = [@[] mutableCopy];
-    }
-    return self;
++ (void)initialize {
+    isForeground = YES;
+    isTracking = NO;
+    isEnableAlert = YES;
+    adapters = [NSMutableArray array];
 }
-
-#pragma mark -
-#pragma mark class method
 
 + (BOOL)isTracking {
-    return [DFTDebugScreenshot sharedInstance].isTracking;
+    return isTracking;
 }
 
 + (void)setTraking:(BOOL)value {
-    DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
-    if (instance.tracking == value) {
+    if (isTracking == value) {
         return;
     }
     else if (value == YES) {
-        instance.tracking = value;
-        [[NSNotificationCenter defaultCenter] addObserver:instance
+        isTracking = value;
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handlingUserDidTakeScreenshotNotification:)
                                                      name:UIApplicationUserDidTakeScreenshotNotification
                                                    object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:instance
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handlingWillResignActiveNotification:)
                                                      name:UIApplicationWillResignActiveNotification
                                                    object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:instance
+        [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handlingDidBecomeActiveNotification:)
                                                      name:UIApplicationDidBecomeActiveNotification
                                                    object:nil];
     }
     else {
-        instance.tracking = value;
-        [[NSNotificationCenter defaultCenter] removeObserver:instance
+        isTracking = value;
+        [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:UIApplicationUserDidTakeScreenshotNotification
                                                       object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:instance
+        [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:UIApplicationWillResignActiveNotification
                                                       object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:instance
+        [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:UIApplicationDidBecomeActiveNotification
                                                       object:nil];
     }
 }
 
 + (BOOL)getEnableAlert {
-    return [DFTDebugScreenshot sharedInstance].enableAlert;
+    return isEnableAlert;
 }
 
 + (void)setEnableAlert:(BOOL)value {
-    [DFTDebugScreenshot sharedInstance].enableAlert = value;
+    isEnableAlert = value;
 }
 
 + (NSArray *)getAdapters {
-    return [NSArray arrayWithArray:[DFTDebugScreenshot sharedInstance].adapters];
+    return [NSArray arrayWithArray:adapters];
 }
 
 + (void)addAdapter:(DFTDebugScreenshotAdapter *)adapater {
-    [[DFTDebugScreenshot sharedInstance].adapters addObject:adapater];
+    [adapters addObject:adapater];
+}
+
++ (NSString *)getUserIdentifier {
+    return userIdentifier;
+}
+
++ (void)setUserIdentifier:(NSString *)identifier {
+    userIdentifier = identifier;
 }
 
 + (void)capture {
-    DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
-    UIViewController *controller = [instance visibledViewController];
-    UIImage *screenshot = [instance captureCurrentScreen];
-    NSString *message = [[instance callerString] stringByAppendingString:@"manual capture"];
-    [instance processWithMessage:message controller:controller screenshot:screenshot];
+    DFTDebugScreenshotContext *context = [DFTDebugScreenshotContext new];
+    context.message = [[self callerString] stringByAppendingString:@"manual capture"];
+    [context searchViewController];
+    [context captureCurrentScreen];
+    [self invokeProcessWithContext:context];
 }
 
 + (void)captureWithError:(NSError *)error {
-    DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
-    UIViewController *controller = [instance visibledViewController];
-    UIImage *screenshot = [instance captureCurrentScreen];
-    NSString *message = [[instance callerString] stringByAppendingString:[error description]];
-    [instance processWithMessage:message controller:controller screenshot:screenshot];
+    DFTDebugScreenshotContext *context = [DFTDebugScreenshotContext new];
+    context.message = [[self callerString] stringByAppendingString:[error description]];
+    [context searchViewController];
+    [context captureCurrentScreen];
+    [self invokeProcessWithContext:context];
 }
 
 + (void)captureWithException:(NSException *)exception {
-    DFTDebugScreenshot *instance = [DFTDebugScreenshot sharedInstance];
-    UIViewController *controller = [instance visibledViewController];
-    UIImage *screenshot = [instance captureCurrentScreen];
-    NSString *message = [[instance callerString] stringByAppendingString:[exception description]];
-    [instance processWithMessage:message controller:controller screenshot:screenshot];
+    DFTDebugScreenshotContext *context = [DFTDebugScreenshotContext new];
+    context.message = [[self callerString] stringByAppendingString:[exception description]];
+    [context searchViewController];
+    [context captureCurrentScreen];
+    [self invokeProcessWithContext:context];
 }
 
 + (id)archiveWithObject:(id)object {
@@ -152,26 +139,33 @@
 #pragma mark -
 #pragma mark observer
 
-- (void)handlingUserDidTakeScreenshotNotification:(NSNotification *)notification {
-    UIViewController *controller = [self visibledViewController];
-    UIImage *screenshot = [self loadScreenshot] ?: [self captureCurrentScreen];
-    [self processWithMessage:@"screenshot" controller:controller screenshot:screenshot];
++ (void)handlingUserDidTakeScreenshotNotification:(NSNotification *)notification {
+    DFTDebugScreenshotContext *context = [DFTDebugScreenshotContext new];
+    context.message = @"screenshot";
+    [context searchViewController];
+    UIImage *screenshot = [self loadScreenshot];
+    if (screenshot) {
+        context.screenshot = screenshot;
+    }
+    else {
+        [context captureCurrentScreen];
+    }
+    [self invokeProcessWithContext:context];
 }
 
-- (void)handlingWillResignActiveNotification:(NSNotification *)notification {
-    [DFTDebugScreenshot sharedInstance].foreground = NO;
++ (void)handlingWillResignActiveNotification:(NSNotification *)notification {
+    isForeground = NO;
 }
 
-- (void)handlingDidBecomeActiveNotification:(NSNotification *)notification {
-    [DFTDebugScreenshot sharedInstance].foreground = YES;
++ (void)handlingDidBecomeActiveNotification:(NSNotification *)notification {
+    isForeground = YES;
 }
 
 #pragma mark -
 #pragma mark AssetsLibrary
 
-- (UIImage *)loadScreenshot {
-    if (![DFTDebugScreenshotHelper isEnablePhotosAccess])
-        return nil;
++ (UIImage *)loadScreenshot {
+    if (![DFTDebugScreenshotHelper isEnablePhotosAccess]) return nil;
 
     // wait for saved the screenshot.
     sleep(1);
@@ -217,41 +211,16 @@
 #pragma mark -
 #pragma mark private
 
-- (void)processWithMessage:(NSString *)message controller:(id)controller screenshot:(UIImage *)screenshot {
-    if (!self.isForeground) return;
++ (void) invokeProcessWithContext:(DFTDebugScreenshotContext *)context {
+    if (!isForeground) return;
 
-    NSArray *adapters = [self.adapters count] > 0 ? self.adapters : @[ [DFTDebugScreenshotDebugImageAdapter new] ];
-    for (DFTDebugScreenshotAdapter *adapter in adapters) {
-        [adapter processWithMessage:message controller:controller screenshot:screenshot];
+    NSArray *_adapters = [adapters count] > 0 ? adapters : @[ [DFTDebugScreenshotDebugImageAdapter new] ];
+    for (id<DFTDebugScreenshotAdapterProtocol> adapter in _adapters) {
+        [adapter processWithContext:context];
     }
 }
 
-- (UIViewController *)visibledViewController {
-    UIViewController *controller = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while (controller.presentedViewController) {
-        controller = controller.presentedViewController;
-    }
-    if ([controller isKindOfClass:[UINavigationController class]]) {
-        controller = [(UINavigationController *)controller visibleViewController];
-    }
-    return controller;
-}
-
-- (UIImage *)captureCurrentScreen {
-    UIViewController *controller = [UIApplication sharedApplication].keyWindow.rootViewController;
-    CGRect frame = controller.view.frame;
-
-    UIGraphicsBeginImageContextWithOptions(frame.size, NO, 1.0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(context, -CGRectGetMinX(frame), -CGRectGetMinY(frame));
-    [controller.view drawViewHierarchyInRect:frame afterScreenUpdates:NO];
-    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    return screenshot;
-}
-
-- (NSString *)callerString {
++ (NSString *)callerString {
     NSString *callerString = [[NSThread callStackSymbols] objectAtIndex:2];
     NSCharacterSet *separators = [NSCharacterSet characterSetWithCharactersInString:@" +?.,"];
     NSMutableArray *caller = [NSMutableArray arrayWithArray:[callerString componentsSeparatedByCharactersInSet:separators]];

@@ -9,6 +9,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import "DFTDebugScreenshotMailAdapter.h"
 #import "DFTDebugScreenshot.h"
+#import "DFTDebugScreenshotContext.h"
 #import "DFTDebugScreenshotHelper.h"
 
 #pragma mark -
@@ -54,13 +55,14 @@
 #pragma mark -
 #pragma mark DFTDebugScreenshotAdapterProtocol
 
-- (void)processWithMessage:(NSString *)message controller:(UIViewController *)controller screenshot:(UIImage *)screenshot {
+- (void)processWithContext:(DFTDebugScreenshotContext *)context {
     if (![MFMailComposeViewController canSendMail]) {
         NSLog(@"You need settings for Mail.");
         return;
     }
 
-    NSString *messageBody = self.messageBody ? [message stringByAppendingFormat:@"\n%@", self.messageBody] : message;
+    UIViewController *controller = context.controller;
+    NSString *messageBody = self.messageBody ? [context.message stringByAppendingFormat:@"\n%@", self.messageBody] : context.message;
     NSMutableArray *body = [@[
                               messageBody,
                               @"\n---------------------\n",
@@ -68,6 +70,7 @@
                               [NSString stringWithFormat:@"BUNDLE IDENTIFIER: %@", [self appBundleIdentifier]],
                               [NSString stringWithFormat:@"VERSION: %@", [self appVersion]],
                               [NSString stringWithFormat:@"BUILD: %@", [self appBuildlVersion]],
+                              [NSString stringWithFormat:@"USER IDENTIFIER: %@", context.userIdentifier],
                               [NSString stringWithFormat:@"OPERATING SYSTEM: %@", [self operatingSystem]],
                               [NSString stringWithFormat:@"DEVICE: %@", [self device]],
                               [NSString stringWithFormat:@"FREE RAM: %@", [self freeRAM]],
@@ -92,8 +95,8 @@
     picker.mailComposeDelegate = (id<MFMailComposeViewControllerDelegate>)self;
     [picker setToRecipients:self.toRecipients];
     [picker setSubject:self.subject];
-    if (screenshot) {
-        [picker addAttachmentData:UIImageJPEGRepresentation(screenshot, 1)
+    if (context.screenshot) {
+        [picker addAttachmentData:UIImageJPEGRepresentation(context.screenshot, 1)
                          mimeType:@"image/jpeg"
                          fileName:@"screenshot.jpg"];
     }
@@ -101,6 +104,7 @@
 
     self.viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     [self.viewController presentViewController:picker animated:YES completion:nil];
+
 }
 
 #pragma mark -

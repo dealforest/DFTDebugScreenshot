@@ -8,7 +8,7 @@
 
 #import "DFTDebugScreenshotAdapter.h"
 
-@interface DFTDebugScreenshotMailAdapter : DFTDebugScreenshotAdapter
+@interface DFTDebugScreenshotMailAdapter : DFTDebugScreenshotAdapter<DFTDebugScreenshotAdapterProtocol>
 
 @property(nonatomic, strong) NSArray *toRecipients;
 @property(nonatomic, strong) NSString *subject;
