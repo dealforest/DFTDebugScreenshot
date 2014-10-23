@@ -7,6 +7,7 @@
 //
 
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "DFTDebugScreenshot.h"
 #import "DFTDebugScreenshotHelper.h"
 
 static NSString * const kDFTDebugScreenshotBunbleName = @"DFTDebugScreenshot";
@@ -20,6 +21,8 @@ static NSString * const kDFTDebugScreenshotStringTable = @"DFTDebugScreenshotLoc
 }
 
 + (void)showAlertWithLocalizedKey:(NSString *)key {
+    if (![DFTDebugScreenshot getEnableAlert]) return;
+
     NSString *callerString = [[NSThread callStackSymbols] objectAtIndex:1];
     NSCharacterSet *separators = [NSCharacterSet characterSetWithCharactersInString:@" -[]+?.,"];
     NSMutableArray *caller = [NSMutableArray arrayWithArray:[callerString componentsSeparatedByCharactersInSet:separators]];
