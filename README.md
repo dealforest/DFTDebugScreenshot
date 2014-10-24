@@ -82,6 +82,13 @@ You will be able to  want to execute the capture by using the NSException and NS
 [DFNDebugScreenshot captureWithException:exception];
 ```
 
+### set User Define Content
+You want to always display content.
+
+```objective-c
+[DFNDebugScreenshot addUserDefineContentWithTitle:@"title" content:@"content"]
+```
+
 ### Unarchive object
 You can deserialize from text that is written in the 'SERIALIZE' section.
 
