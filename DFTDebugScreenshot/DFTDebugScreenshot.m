@@ -19,6 +19,7 @@ static BOOL isForeground = YES;
 static BOOL isTracking = NO;
 static BOOL isEnableAlert = YES;
 static NSMutableArray *adapters;
+static NSMutableArray *userDefineContents;
 static NSString *userIdentifier;
 
 + (void)initialize {
@@ -26,6 +27,8 @@ static NSString *userIdentifier;
     isTracking = NO;
     isEnableAlert = YES;
     adapters = [NSMutableArray array];
+    userDefineContents = [NSMutableArray array];
+    userIdentifier = @"-";
 }
 
 + (BOOL)isTracking {
@@ -79,6 +82,14 @@ static NSString *userIdentifier;
 
 + (void)addAdapter:(DFTDebugScreenshotAdapter *)adapater {
     [adapters addObject:adapater];
+}
+
++ (NSArray *)getUserDefineContents {
+    return [NSArray arrayWithArray:userDefineContents];
+}
+
++ (void)addUserDefineContentWithTitle:(NSString *)title content:(id)content {
+    [userDefineContents addObject:@{ @"title": title, @"content": [content description] }];
 }
 
 + (NSString *)getUserIdentifier {
@@ -214,6 +225,8 @@ static NSString *userIdentifier;
 + (void) invokeProcessWithContext:(DFTDebugScreenshotContext *)context {
     if (!isForeground) return;
 
+    context.userIdentifier = userIdentifier;
+    context.userDefineContents = [userDefineContents copy];
     NSArray *_adapters = [adapters count] > 0 ? adapters : @[ [DFTDebugScreenshotDebugImageAdapter new] ];
     for (id<DFTDebugScreenshotAdapterProtocol> adapter in _adapters) {
         [adapter processWithContext:context];

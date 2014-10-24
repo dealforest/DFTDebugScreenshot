@@ -86,6 +86,14 @@
                                     [DFTDebugScreenshot archiveWithObject:debugObject],
                                     ]];
     }
+    if (context.userDefineContents.count > 0) {
+        for (NSDictionary *userDefineContent in context.userDefineContents) {
+            [body addObjectsFromArray:@[
+                                        [NSString stringWithFormat:@"[%@]", userDefineContent[@"title"]],
+                                        userDefineContent[@"content"],
+                                        ]];
+        }
+    }
     [body addObjectsFromArray:@[
                                 @"[VIEW HIERARCHY]",
                                 [self inquiryViewHierarhyOfController:controller]
