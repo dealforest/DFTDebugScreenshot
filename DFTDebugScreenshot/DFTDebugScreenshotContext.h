@@ -14,6 +14,7 @@
 @property (nonatomic) NSString *userIdentifier;
 @property (nonatomic) NSString *message;
 @property (nonatomic) UIImage *screenshot;
+@property (nonatomic) NSArray *userDefineContents;
 
 - (void)searchViewController;
 

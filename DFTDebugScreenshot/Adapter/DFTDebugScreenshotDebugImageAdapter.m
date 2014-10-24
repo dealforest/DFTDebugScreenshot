@@ -27,37 +27,60 @@ static float const kCompressionQuality = 0.7;
     UIViewController *controller = context.controller;
     id debugObject = [self inquiryDebugObjectOfController:controller];
 
+    NSMutableArray *messages = [@[
+                                  context.message,
+                                  @"",
+                                  @"[USER IDENTIFIER]",
+                                  context.userIdentifier,
+                                  @"",
+                                  @"[DEBUG OBJECT]",
+                                  [debugObject description] ?: @"none",
+                                  @"",
+                                  @"[VIEW HIERARCHY]",
+                                  [self inquiryViewHierarhyOfController:controller],
+                                  ] mutableCopy];
+    if (context.userDefineContents.count > 0) {
+        for (NSDictionary *userDefineContent in context.userDefineContents) {
+            [messages addObjectsFromArray:@[
+                                            [NSString stringWithFormat:@"[%@]", userDefineContent[@"title"]],
+                                            userDefineContent[@"content"],
+                                            @"",
+                                            ]];
+        }
+    }
+
     NSArray *views = [[DFTDebugScreenshotHelper bundle] loadNibNamed:@"DFTDebugScreenshotView" owner:self options:nil];
     DFTDebugScreenshotView *debugView = [views firstObject];
     [debugView setTitleText:NSStringFromClass([controller class])
-                    message:[@[
-                               context.message,
-                               @"",
-                               @"[USER IDENTIFIER]",
-                               context.userIdentifier,
-                               @"[DEBUG OBJECT]",
-                               [debugObject description] ?: @"none",
-                               @"",
-                               @"[VIEW HIERARCHY]",
-                               [self inquiryViewHierarhyOfController:controller],
-                               ] componentsJoinedByString:@"\n"]];
+                    message:[messages componentsJoinedByString:@"\n"]];
 
     UIImage *image = [debugView convertToImage];
     NSData *imageData = UIImageJPEGRepresentation(image, kCompressionQuality);
     CGImageSourceRef imageRef = CGImageSourceCreateWithData((CFDataRef)imageData, nil);
 
     NSMutableDictionary *meta = [(__bridge NSDictionary*)CGImageSourceCopyPropertiesAtIndex(imageRef, 0, nil) mutableCopy];
+    NSMutableDictionary *exif = meta[(NSString *)kCGImagePropertyExifDictionary] ?: [@{} mutableCopy];
+    NSMutableString *comment = [exif[(NSString *)kCGImagePropertyExifUserComment] ?: @"" mutableCopy];
     if (debugObject) {
-        NSMutableDictionary *exif = meta[(NSString *)kCGImagePropertyExifDictionary] ?: [@{} mutableCopy];
-        exif[(NSString *)kCGImagePropertyExifUserComment] = [@[
-                                                               @"[DEBUG OBJECT]",
-                                                               [debugObject description],
-                                                               @"[SERIALIZE]",
-                                                               [NSKeyedArchiver archivedDataWithRootObject:debugObject]
-                                                               ]
-                                                             componentsJoinedByString:@" "];
-        meta[(NSString *)kCGImagePropertyExifDictionary] = exif;
+        [comment appendString:[@[
+                                 @"[DEBUG OBJECT]",
+                                 [debugObject description],
+                                 @"[SERIALIZE]",
+                                 [NSKeyedArchiver archivedDataWithRootObject:debugObject]
+                                 ]
+                               componentsJoinedByString:@" "]];
     }
+    if (context.userDefineContents.count > 0) {
+        for (NSDictionary *userDefineContent in context.userDefineContents) {
+            [comment appendString:[@[
+                                     [NSString stringWithFormat:@"[%@]", userDefineContent[@"title"]],
+                                     userDefineContent[@"content"],
+                                     ]
+                                   componentsJoinedByString:@" "]];
+        }
+    }
+    exif[(NSString *)kCGImagePropertyExifUserComment] = comment;
+    meta[(NSString *)kCGImagePropertyExifDictionary] = exif;
 
     ALAssetsLibrary* library = [ALAssetsLibrary new];
     [library writeImageDataToSavedPhotosAlbum:imageData

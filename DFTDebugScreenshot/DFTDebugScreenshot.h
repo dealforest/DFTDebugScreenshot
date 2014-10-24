@@ -32,6 +32,10 @@
 
 + (void)addAdapter:(DFTDebugScreenshotAdapter *)adapater;
 
++ (NSArray *)getUserDefineContents;
+
++ (void)addUserDefineContentWithTitle:(NSString *)title content:(id)content;
+
 + (NSString *)getUserIdentifier;
 
 + (void)setUserIdentifier:(NSString *)identifier;
